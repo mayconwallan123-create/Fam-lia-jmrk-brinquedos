@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Família JMRK Brinquedos | Catálogo e agendamento</title>
+<title>Família JMRK Brinquedos | Catálogo Oficial</title>
 <style>
 :root{--navy:#101827;--red:#e11d2e;--yellow:#ffdc20;--green:#16a34a;--cream:#fff8ef;--ink:#202938}
 *{box-sizing:border-box}
@@ -12,18 +12,24 @@ header{position:sticky;top:0;z-index:5;background:var(--navy);color:#fff;padding
 .top{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .brand{font-weight:900;font-size:1.1rem}.brand span{color:var(--yellow)}
 button,.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:750;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
-.primary{background:var(--green);color:white}.dark{background:#29364b;color:white}.yellow{background:var(--yellow);color:#111}.outline{border:1px solid #ccd2dc;background:white;color:var(--ink)}.danger{background:var(--red);color:white}
+.primary{background:var(--green);color:white}.dark{background:#29364b;color:white}.yellow{background:var(--yellow);color:#111}.outline{border:1px solid #ccd2dc;background:white;color:var(--ink)}
 main{max-width:1200px;margin:auto;padding:18px}
-.hero{border-radius:18px;overflow:hidden;background:#090909;box-shadow:0 8px 24px #0002}.hero img{display:block;width:100%;height:auto}
 .notice{background:#fff7d6;border:1px solid #efd56b;border-radius:12px;padding:12px 14px;margin:14px 0;font-size:.93rem}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.filters button{background:#fff;border:1px solid #d7dbe2}.filters button.active{background:var(--navy);color:white}
-h1{font-size:clamp(1.5rem,4vw,2.2rem);margin:24px 0 8px}h2{margin:26px 0 12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:14px}
+h1,h2{margin:20px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .card{background:white;border:1px solid #e0e3e8;border-radius:15px;overflow:hidden;box-shadow:0 4px 12px #0000000a;display:flex;flex-direction:column}
-.product-art{height:180px;display:grid;place-items:center;background:#fff7e8;padding:8px;border-bottom:1px solid #eee}.product-art img{width:100%;height:100%;object-fit:contain;display:block}
-.card-body{padding:14px;display:flex;flex-direction:column;gap:9px;flex:1}.category{font-size:.75rem;color:#697386;text-transform:uppercase;letter-spacing:.06em;font-weight:800}.card h3{font-size:1rem;margin:0}.price{font-size:1.35rem;font-weight:900;color:#bd1525}.duration{font-size:.82rem;color:#596579}.card .primary{margin-top:auto;width:100%}.stockline{font-size:.82rem;color:#536174}.stockwarn{color:#b42318;font-weight:800}
-.cartbar{position:sticky;bottom:0;z-index:4;background:#fff;border-top:1px solid #d9dee7;padding:12px 16px;box-shadow:0 -4px 14px #0001}.cartinner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.product-art{height:160px;display:grid;place-items:center;background:#fff7e8;padding:8px;border-bottom:1px solid #eee;font-size:3rem}
+.card-body{padding:14px;display:flex;flex-direction:column;gap:9px;flex:1}
+.category{font-size:.75rem;color:#697386;text-transform:uppercase;letter-spacing:.06em;font-weight:800}
+.card h3{font-size:1rem;margin:0}
+.price{font-size:1.3rem;font-weight:900;color:#bd1525}
+.duration{font-size:.82rem;background:#f1f3f5;padding:4px 8px;border-radius:6px;width:fit-content;font-weight:600;color:#495057}
+.card .primary{margin-top:auto;width:100%}
+.stockline{font-size:.82rem;color:#536174}.stockwarn{color:#b42318;font-weight:800}
+.cartbar{position:sticky;bottom:0;z-index:4;background:#fff;border-top:1px solid #d9dee7;padding:12px 16px;box-shadow:0 -4px 14px #0001}
+.cartinner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 dialog{border:0;border-radius:18px;padding:0;width:min(650px,calc(100% - 24px));max-height:90vh;overflow:auto;box-shadow:0 18px 80px #0005}dialog::backdrop{background:#101827aa}
 .modalhead{padding:16px 20px;background:var(--navy);color:white;display:flex;justify-content:space-between;align-items:center}
 .modalbody{padding:20px}.modalbody label{display:block;font-weight:750;margin:12px 0 5px}.modalbody input,.modalbody textarea,.modalbody select{width:100%;padding:12px;border:1px solid #cbd1da;border-radius:9px;font:inherit}
@@ -44,7 +50,7 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
   <div class="top">
     <div class="brand">🎈 Família <span>JMRK</span> Brinquedos</div>
     <div class="actions">
-      <button class="dark" onclick="openDialog('clientDialog')">Área do Cliente</button>
+      <button class="dark" onclick="openDialog('clientDialog')">Meus Agendamentos</button>
       <button class="yellow" onclick="handleAdminLogin()">🔒 Área do Dono</button>
     </div>
   </div>
@@ -52,17 +58,18 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
 
 <main>
   <section class="notice">
-    <strong>📍 Atendimento:</strong> Itapevi e região (até 20km). Taxa de entrega fixa: R$ 30 (até 10km) e R$ 50 (11km a 20km).
+    <strong>📍 Atendimento:</strong> Itapevi e região (até 20km). Taxa de entrega fixa: <strong>R$ 30 (até 10km)</strong> e <strong>R$ 50 (11km a 20km)</strong>. Ganhe 1 brinde (Cavalinho ou Minhoga) na locação de qualquer combo!
   </section>
 
   <div class="filters" id="categoryFilters">
-    <button class="active" onclick="filterCategory('todos')">Todos</button>
-    <button onclick="filterCategory('brinquedos')">Brinquedos</button>
-    <button onclick="filterCategory('alimentacao')">Alimentação</button>
-    <button onclick="filterCategory('jogos')">Jogos</button>
+    <button class="active" onclick="filterCategory('todos')">Todos os Itens</button>
+    <button onclick="filterCategory('camas')">Cama Elástica</button>
+    <button onclick="filterCategory('piscinas')">Piscina de Bolinhas</button>
+    <button onclick="filterCategory('individuais')">Itens Individuais</button>
+    <button onclick="filterCategory('combos')">Combos Promocionais</button>
   </div>
 
-  <h2>Nosso Catálogo</h2>
+  <h2>Catálogo Completo</h2>
   <div class="grid" id="productGrid"></div>
 </main>
 
@@ -70,24 +77,24 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
   <div class="cartinner">
     <div>
       <strong id="cartCount">0 item(ns) selecionado(s)</strong>
-      <div style="font-size:0.9rem; color:#555;">Total de Aluguel: <strong id="cartTotal" style="color:var(--red);">R$ 0,00</strong></div>
+      <div style="font-size:0.9rem; color:#555;">Total: <strong id="cartTotal" style="color:var(--red);">R$ 0,00</strong></div>
     </div>
-    <button class="primary" onclick="openDialog('checkoutDialog')">Finalizar Agendamento</button>
+    <button class="primary" onclick="openDialog('checkoutDialog')">Finalizar Agendamento 🛒</button>
   </div>
 </div>
 
 <footer>
-  <p>© 2026 Família JMRK Brinquedos. Todos os direitos reservados.</p>
+  <p>Fale conosco: <strong id="footerPhoneDisplay">(11) 99231-2902</strong> | © 2026 Família JMRK Brinquedos</p>
 </footer>
 
-<!-- MODAL: FINALIZAR AGENDAMENTO (CARRINHO E DADOS) -->
+<!-- MODAL: FINALIZAR AGENDAMENTO -->
 <dialog id="checkoutDialog">
   <div class="modalhead">
     <h3>Finalizar Agendamento</h3>
     <button class="outline" onclick="closeDialog('checkoutDialog')">✖</button>
   </div>
   <div class="modalbody">
-    <h4>Itens Selecionados:</h4>
+    <h4>Seus Itens Selecionados:</h4>
     <div id="checkoutCartList"></div>
     <hr style="margin:15px 0; border:0; border-top:1px solid #eee;">
     
@@ -106,19 +113,19 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
         </div>
       </div>
 
-      <label>Endereço de Entrega (Itapevi e Região):</label>
-      <input type="text" id="clientAddress" required placeholder="Rua, Número, Bairro, Cidade">
+      <label>Endereço de Entrega (Rua, Número, Bairro):</label>
+      <input type="text" id="clientAddress" required placeholder="Ex: Rua das Flores, 123 - Itapevi">
 
-      <label>Distância aproximada (para cálculo do frete):</label>
+      <label>Taxa de Entrega / Distância:</label>
       <select id="shippingRate" onchange="updateCheckoutTotal()" required>
         <option value="30">Até 10 km - R$ 30,00</option>
         <option value="50">De 11 a 20 km - R$ 50,00</option>
       </select>
 
-      <div style="margin: 15px 0; font-size:1.1rem; background:#f9f9f9; padding:10px; border-radius:8px;">
-        <div>Subtotal Aluguel: <strong id="summarySubtotal">R$ 0,00</strong></div>
+      <div style="margin: 15px 0; font-size:1.1rem; background:#f9f9f9; padding:12px; border-radius:8px;">
+        <div>Subtotal Brinquedos: <strong id="summarySubtotal">R$ 0,00</strong></div>
         <div>Frete: <strong id="summaryShipping">R$ 30,00</strong></div>
-        <div style="font-size:1.2rem; color:var(--red); margin-top:5px;">Total Geral: <strong id="summaryGrandTotal">R$ 0,00</strong></div>
+        <div style="font-size:1.25rem; color:var(--red); margin-top:5px;">Total Geral: <strong id="summaryGrandTotal">R$ 0,00</strong></div>
       </div>
 
       <button type="submit" class="primary" style="width:100%; font-size:1.1rem;">Enviar Agendamento via WhatsApp 📱</button>
@@ -126,14 +133,14 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
   </div>
 </dialog>
 
-<!-- MODAL: ÁREA DO CLIENTE -->
+<!-- MODAL: MEUS AGENDAMENTOS -->
 <dialog id="clientDialog">
   <div class="modalhead">
-    <h3>Área do Cliente</h3>
+    <h3>Consultar Agendamentos</h3>
     <button class="outline" onclick="closeDialog('clientDialog')">✖</button>
   </div>
   <div class="modalbody">
-    <p>Consulte seus agendamentos inserindo seu número de telefone cadastrado:</p>
+    <p>Digite seu telefone para verificar seus pedidos salvos:</p>
     <div style="display:flex; gap:8px;">
       <input type="tel" id="searchPhone" placeholder="(11) 99999-9999">
       <button class="dark" onclick="searchClientBookings()">Buscar</button>
@@ -142,10 +149,10 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
   </div>
 </dialog>
 
-<!-- MODAL: ÁREA DO DONO (ADMINISTRATIVO) -->
+<!-- MODAL: ÁREA DO DONO -->
 <dialog id="adminDialog">
   <div class="modalhead">
-    <h3>🔒 Área do Dono - Gestão Interna</h3>
+    <h3>🔒 Painel Administrativo</h3>
     <button class="outline" onclick="closeDialog('adminDialog')">✖</button>
   </div>
   <div class="modalbody">
@@ -155,53 +162,89 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
         <strong id="statBookingsCount">0</strong>
       </div>
       <div class="stat">
-        <span>Faturamento Estimado</span>
+        <span>Faturamento Total</span>
         <strong id="statRevenue" style="color:var(--green);">R$ 0,00</strong>
       </div>
     </div>
 
     <div class="adminbox">
-      <h4>Controle de Estoque de Brinquedos</h4>
+      <h4>📱 Configuração do WhatsApp da Empresa</h4>
+      <label style="margin-top:0;">Número de Telefone (DDD + Número sem símbolos):</label>
+      <input type="text" id="adminPhoneInput" style="margin-bottom:8px;">
+      <button class="primary" onclick="saveAdminPhone()">Salvar Novo Telefone</button>
+    </div>
+
+    <div class="adminbox">
+      <h4>Controle de Estoque (Edite abaixo)</h4>
       <div id="adminStockList"></div>
     </div>
 
     <div class="adminbox">
-      <h4>Relatório de Agendamentos</h4>
+      <h4>Lista de Agendamentos Recebidos</h4>
       <div id="adminBookingsList"></div>
     </div>
   </div>
 </dialog>
 
 <script>
-// SENHA DE ACESSO DA ÁREA DO DONO
+// SENHA DA ÁREA DO DONO
 const ADMIN_PASSWORD = "47739668";
 
-// CATÁLOGO INICIAL
+// CONFIGURAÇÃO DO TELEFONE DA EMPRESA (Pode ser alterado na Área do Dono ou direto aqui)
+let companyPhone = localStorage.getItem('jmrk_phone') || "5511992312902";
+
+// CATÁLOGO COMPLETO
 const initialProducts = [
-  { id: 1, name: "Cama Elástica Média", category: "brinquedos", price: 150, stock: 3, img: "https://via.placeholder.com/200?text=Cama+Elastica" },
-  { id: 2, name: "Piscina de Bolinhas", category: "brinquedos", price: 130, stock: 2, img: "https://via.placeholder.com/200?text=Piscina+Bolinhas" },
-  { id: 3, name: "Escorregador Infantil", category: "brinquedos", price: 80, stock: 4, img: "https://via.placeholder.com/200?text=Escorregador" },
-  { id: 4, name: "Tombo Legal", category: "brinquedos", price: 200, stock: 1, img: "https://via.placeholder.com/200?text=Tombo+Legal" },
-  { id: 5, name: "Máquina de Algodão Doce", category: "alimentacao", price: 120, stock: 2, img: "https://via.placeholder.com/200?text=Algodao+Doce" },
-  { id: 6, name: "Carrinho de Pipoca", category: "alimentacao", price: 120, stock: 2, img: "https://via.placeholder.com/200?text=Pipoca" },
-  { id: 7, name: "Mesa de Pebolim Infantil", category: "jogos", price: 100, stock: 2, img: "https://via.placeholder.com/200?text=Pebolim" }
+  // Cama Elástica
+  { id: 1, name: "Cama Elástica 2,00 Metros", category: "camas", price: 120, duration: "8 Horas", stock: 5, icon: "🎪" },
+  { id: 2, name: "Cama Elástica 2,44 Metros", category: "camas", price: 140, duration: "8 Horas", stock: 5, icon: "🎪" },
+  { id: 3, name: "Cama Elástica 3,05 Metros", category: "camas", price: 160, duration: "8 Horas", stock: 4, icon: "🎪" },
+
+  // Piscina de Bolinhas
+  { id: 4, name: "Piscina de Bolinhas 1x1 Metro", category: "piscinas", price: 120, duration: "8 Horas", stock: 4, icon: "🔵" },
+  { id: 5, name: "Piscina de Bolinhas 1,5x1,5 Metros", category: "piscinas", price: 140, duration: "8 Horas", stock: 4, icon: "🔵" },
+  { id: 6, name: "Piscina de Bolinhas 2x2 Metros", category: "piscinas", price: 160, duration: "8 Horas", stock: 3, icon: "🔵" },
+
+  // Itens Individuais
+  { id: 7, name: "Minhoga", category: "individuais", price: 20, duration: "8 Horas", stock: 6, icon: "🐛" },
+  { id: 8, name: "Cavalinho", category: "individuais", price: 20, duration: "8 Horas", stock: 6, icon: "🎠" },
+  { id: 9, name: "Gangorra Infantil", category: "individuais", price: 30, duration: "8 Horas", stock: 5, icon: "⚖️" },
+  { id: 10, name: "Escorregador Pequeno", category: "individuais", price: 30, duration: "8 Horas", stock: 5, icon: "🛝" },
+  { id: 11, name: "Escorregador Médio", category: "individuais", price: 40, duration: "8 Horas", stock: 4, icon: "🛝" },
+  { id: 12, name: "Escorregador Grande", category: "individuais", price: 60, duration: "8 Horas", stock: 3, icon: "🛝" },
+  { id: 13, name: "Jogo de Mesa com 4 Cadeiras", category: "individuais", price: 20, duration: "8 Horas", stock: 10, icon: "🪑" },
+  { id: 14, name: "Máquina de Algodão Doce", category: "individuais", price: 100, duration: "Por Hora", stock: 3, icon: "🍿" },
+  { id: 15, name: "Pipoqueira Elétrica", category: "individuais", price: 100, duration: "Por Hora", stock: 3, icon: "🍿" },
+  { id: 16, name: "Pebolim Infantil", category: "individuais", price: 150, duration: "8 Horas", stock: 4, icon: "⚽" },
+
+  // Combos Promocionais
+  { id: 17, name: "Combo 1 (Cama 2,00m + Piscina 1x1m)", category: "combos", price: 200, duration: "8 Horas + Brinde", stock: 5, icon: "⭐" },
+  { id: 18, name: "Combo 2 (Cama 2,44m + Piscina 1,5x1,5m)", category: "combos", price: 230, duration: "8 Horas + Brinde", stock: 5, icon: "⭐" },
+  { id: 19, name: "Combo 3 (Cama 3,05m + Piscina 1,5x1,5m)", category: "combos", price: 250, duration: "8 Horas + Brinde", stock: 4, icon: "⭐" },
+  { id: 20, name: "Combo 4 (Cama 3,05m + Piscina 2x2m)", category: "combos", price: 280, duration: "8 Horas + Brinde", stock: 3, icon: "⭐" }
 ];
 
-// ESTADO DA APLICAÇÃO (Salvo no LocalStorage)
-let products = JSON.parse(localStorage.getItem('jmrk_products')) || initialProducts;
-let bookings = JSON.parse(localStorage.getItem('jmrk_bookings')) || [];
+let products = JSON.parse(localStorage.getItem('jmrk_products_v2')) || initialProducts;
+let bookings = JSON.parse(localStorage.getItem('jmrk_bookings_v2')) || [];
 let cart = [];
 
 function saveState() {
-  localStorage.setItem('jmrk_products', JSON.stringify(products));
-  localStorage.setItem('jmrk_bookings', JSON.stringify(bookings));
+  localStorage.setItem('jmrk_products_v2', JSON.stringify(products));
+  localStorage.setItem('jmrk_bookings_v2', JSON.stringify(bookings));
+  localStorage.setItem('jmrk_phone', companyPhone);
 }
 
-// RENDEREIZAR PRODUTOS
+function updateFooterPhone() {
+  let display = companyPhone.replace(/^55/, '');
+  if (display.length === 11) {
+    display = `(${display.substring(0,2)}) ${display.substring(2,7)}-${display.substring(7)}`;
+  }
+  document.getElementById('footerPhoneDisplay').innerText = display;
+}
+
 function renderProducts(filter = 'todos') {
   const grid = document.getElementById('productGrid');
   grid.innerHTML = '';
-
   const filtered = filter === 'todos' ? products : products.filter(p => p.category === filter);
 
   filtered.forEach(p => {
@@ -209,18 +252,17 @@ function renderProducts(filter = 'todos') {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-      <div class="product-art">
-        <img src="${p.img}" alt="${p.name}">
-      </div>
+      <div class="product-art">${p.icon}</div>
       <div class="card-body">
         <span class="category">${p.category}</span>
         <h3>${p.name}</h3>
         <div class="price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+        <div class="duration">⏱️ ${p.duration}</div>
         <div class="stockline ${isOut ? 'stockwarn' : ''}">
-          ${isOut ? '❌ Indisponível' : `Em estoque: ${p.stock}un.`}
+          ${isOut ? '❌ Indisponível' : `Disponíveis: ${p.stock} un.`}
         </div>
         <button class="primary" ${isOut ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''} onclick="addToCart(${p.id})">
-          ${isOut ? 'Esgotado' : 'Alugar / Adicionar'}
+          ${isOut ? 'Esgotado' : 'Adicionar ao Carrinho 🛒'}
         </button>
       </div>
     `;
@@ -234,7 +276,6 @@ function filterCategory(cat) {
   renderProducts(cat);
 }
 
-// SISTEMA DE CARRINHO
 function addToCart(productId) {
   const product = products.find(p => p.id === productId);
   if (!product || product.stock <= 0) return;
@@ -244,13 +285,12 @@ function addToCart(productId) {
     if (itemInCart.qty < product.stock) {
       itemInCart.qty++;
     } else {
-      alert('Quantidade máxima em estoque atingida para este item.');
+      alert('Quantidade máxima em estoque atingida.');
       return;
     }
   } else {
     cart.push({ ...product, qty: 1 });
   }
-
   updateCartBar();
 }
 
@@ -271,7 +311,6 @@ function updateCartBar() {
   }
 }
 
-// DIÁLOGOS / MODAIS
 function openDialog(id) {
   if (id === 'checkoutDialog') renderCheckoutList();
   document.getElementById(id).showModal();
@@ -281,15 +320,10 @@ function closeDialog(id) {
   document.getElementById(id).close();
 }
 
-// CHECKOUT & VALORES
 function renderCheckoutList() {
   const list = document.getElementById('checkoutCartList');
   list.innerHTML = '';
-
-  if (cart.length === 0) {
-    list.innerHTML = '<p class="empty">Carrinho vazio.</p>';
-    return;
-  }
+  if (cart.length === 0) return;
 
   cart.forEach(item => {
     const row = document.createElement('div');
@@ -307,7 +341,6 @@ function renderCheckoutList() {
     `;
     list.appendChild(row);
   });
-
   updateCheckoutTotal();
 }
 
@@ -317,14 +350,8 @@ function changeQty(id, delta) {
   if (!item) return;
 
   item.qty += delta;
-  if (item.qty > product.stock) {
-    item.qty = product.stock;
-    alert('Limite de estoque atingido.');
-  }
-
-  if (item.qty <= 0) {
-    cart = cart.filter(c => c.id !== id);
-  }
+  if (item.qty > product.stock) item.qty = product.stock;
+  if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
 
   updateCartBar();
   renderCheckoutList();
@@ -341,7 +368,6 @@ function updateCheckoutTotal() {
   document.getElementById('summaryGrandTotal').innerText = `R$ ${grandTotal.toFixed(2).replace('.', ',')}`;
 }
 
-// ENVIAR AGENDAMENTO
 function submitBooking(e) {
   e.preventDefault();
   if (cart.length === 0) return;
@@ -354,20 +380,9 @@ function submitBooking(e) {
   const subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
   const total = subtotal + shipping;
 
-  const newBooking = {
-    id: Date.now(),
-    name,
-    phone,
-    date,
-    address,
-    items: [...cart],
-    subtotal,
-    shipping,
-    total
-  };
-
-  // Salvar agendamento e descontar estoque
+  const newBooking = { id: Date.now(), name, phone, date, address, items: [...cart], total };
   bookings.push(newBooking);
+
   cart.forEach(cItem => {
     const prod = products.find(p => p.id === cItem.id);
     if (prod) prod.stock -= cItem.qty;
@@ -376,66 +391,45 @@ function submitBooking(e) {
   saveState();
   renderProducts();
 
-  // Mensagem para o WhatsApp
-  let msg = `*Novo Agendamento - Família JMRK Brinquedos*\n\n`;
+  let msg = `*Novo Agendamento - Família JMRK Brinquedos* 🎈\n\n`;
   msg += `*Cliente:* ${name}\n`;
   msg += `*Telefone:* ${phone}\n`;
-  msg += `*Data:* ${date}\n`;
+  msg += `*Data do Evento:* ${date}\n`;
   msg += `*Endereço:* ${address}\n\n`;
-  msg += `*Itens:*\n`;
-  cart.forEach(i => {
-    msg += `- ${i.name} (${i.qty}x)\n`;
-  });
+  msg += `*Itens Escolhidos:*\n`;
+  cart.forEach(i => { msg += `- ${i.name} (${i.qty}x)\n`; });
   msg += `\n*Subtotal:* R$ ${subtotal.toFixed(2)}\n`;
   msg += `*Frete:* R$ ${shipping.toFixed(2)}\n`;
   msg += `*Total Geral:* R$ ${total.toFixed(2)}`;
 
-  const whatsappNum = "5511999999999"; // Substituir pelo WhatsApp oficial da empresa
-  window.open(`https://wa.me/${whatsappNum}?text=${encodeURIComponent(msg)}`, '_blank');
+  window.open(`https://wa.me/${companyPhone}?text=${encodeURIComponent(msg)}`, '_blank');
 
-  // Limpeza
   cart = [];
   updateCartBar();
   closeDialog('checkoutDialog');
-  alert('Agendamento registrado com sucesso! Você será redirecionado para o WhatsApp.');
+  alert('Pedido gerado com sucesso! Redirecionando para o WhatsApp.');
 }
 
-// AREA DO CLIENTE
 function searchClientBookings() {
   const phone = document.getElementById('searchPhone').value.trim();
   const resContainer = document.getElementById('clientBookingsResult');
   resContainer.innerHTML = '';
-
-  if (!phone) {
-    resContainer.innerHTML = '<p style="color:red;">Digite o número de telefone.</p>';
-    return;
-  }
+  if (!phone) return;
 
   const found = bookings.filter(b => b.phone.includes(phone));
   if (found.length === 0) {
-    resContainer.innerHTML = '<p class="empty">Nenhum agendamento localizado para esse número.</p>';
+    resContainer.innerHTML = '<p class="empty">Nenhum agendamento encontrado.</p>';
     return;
   }
 
   found.forEach(b => {
     const box = document.createElement('div');
-    box.style.background = '#f4f5f7';
-    box.style.padding = '10px';
-    box.style.borderRadius = '8px';
-    box.style.marginBottom = '10px';
-    box.innerHTML = `
-      <strong>Data do Evento: ${b.date}</strong>
-      <div>Total: <strong>R$ ${b.total.toFixed(2)}</strong></div>
-      <div>Endereço: ${b.address}</div>
-      <div style="font-size:0.85rem; color:#666; margin-top:4px;">
-        Itens: ${b.items.map(i => `${i.name} (${i.qty}x)`).join(', ')}
-      </div>
-    `;
+    box.style.background = '#f4f5f7'; box.style.padding = '10px'; box.style.borderRadius = '8px'; box.style.marginBottom = '10px';
+    box.innerHTML = `<strong>Data: ${b.date}</strong> | Total: R$ ${b.total.toFixed(2)}<br><small>Endereço: ${b.address}</small>`;
     resContainer.appendChild(box);
   });
 }
 
-// AREA DO DONO - LOGIN COM SENHA
 function handleAdminLogin() {
   const pass = prompt("🔐 Digite a senha da Área do Dono:");
   if (pass === ADMIN_PASSWORD) {
@@ -447,47 +441,45 @@ function handleAdminLogin() {
 }
 
 function renderAdminData() {
-  // Estatísticas
   const totalRevenue = bookings.reduce((acc, b) => acc + b.total, 0);
   document.getElementById('statBookingsCount').innerText = bookings.length;
   document.getElementById('statRevenue').innerText = `R$ ${totalRevenue.toFixed(2).replace('.', ',')}`;
 
-  // Controle de Estoque
+  document.getElementById('adminPhoneInput').value = companyPhone;
+
   const stockContainer = document.getElementById('adminStockList');
   stockContainer.innerHTML = '';
   products.forEach(p => {
     const row = document.createElement('div');
     row.className = 'stock-editor';
-    row.innerHTML = `
-      <span>${p.name} (R$ ${p.price.toFixed(2)})</span>
-      <input type="number" min="0" value="${p.stock}" onchange="updateStock(${p.id}, this.value)">
-    `;
+    row.innerHTML = `<span>${p.name}</span><input type="number" min="0" value="${p.stock}" onchange="updateStock(${p.id}, this.value)">`;
     stockContainer.appendChild(row);
   });
 
-  // Lista de Agendamentos Realizados
   const bookingsContainer = document.getElementById('adminBookingsList');
   bookingsContainer.innerHTML = '';
   if (bookings.length === 0) {
-    bookingsContainer.innerHTML = '<p class="empty">Sem agendamentos registrados.</p>';
+    bookingsContainer.innerHTML = '<p>Sem agendamentos registrados.</p>';
     return;
   }
-
   bookings.forEach(b => {
     const item = document.createElement('div');
-    item.style.background = '#white';
-    item.style.border = '1px solid #ddd';
-    item.style.padding = '10px';
-    item.style.borderRadius = '8px';
-    item.style.marginBottom = '8px';
-    item.innerHTML = `
-      <div><strong>${b.name}</strong> - ${b.phone}</div>
-      <div class="small">Data: ${b.date} | Valor: R$ ${b.total.toFixed(2)}</div>
-      <div class="small">Local: ${b.address}</div>
-      <div class="small" style="color:#555;">Itens: ${b.items.map(i => `${i.name} (${i.qty}x)`).join(', ')}</div>
-    `;
+    item.style.background = 'white'; item.style.border = '1px solid #ddd'; item.style.padding = '10px'; item.style.borderRadius = '8px'; item.style.marginBottom = '8px';
+    item.innerHTML = `<strong>${b.name}</strong> (${b.phone}) - Data: ${b.date}<br><small>Total: R$ ${b.total.toFixed(2)} | End: ${b.address}</small>`;
     bookingsContainer.appendChild(item);
   });
+}
+
+function saveAdminPhone() {
+  const input = document.getElementById('adminPhoneInput').value.replace(/\D/g, '');
+  if (input.length >= 10) {
+    companyPhone = input.startsWith('55') ? input : '55' + input;
+    saveState();
+    updateFooterPhone();
+    alert('✅ Telefone do WhatsApp atualizado com sucesso!');
+  } else {
+    alert('❌ Por favor, digite um número válido com DDD.');
+  }
 }
 
 function updateStock(id, newStock) {
@@ -499,7 +491,8 @@ function updateStock(id, newStock) {
   }
 }
 
-// INICIALIZAÇÃO
+// Inicialização
+updateFooterPhone();
 renderProducts();
 </script>
 

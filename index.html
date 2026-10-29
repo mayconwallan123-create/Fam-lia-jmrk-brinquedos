@@ -3,498 +3,113 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Família JMRK Brinquedos | Catálogo Oficial</title>
+<meta name="theme-color" content="#101827">
+<title>Família JMRK Brinquedos | Catálogo e Agendamento</title>
 <style>
-:root{--navy:#101827;--red:#e11d2e;--yellow:#ffdc20;--green:#16a34a;--cream:#fff8ef;--ink:#202938}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--cream);color:var(--ink)}
+:root{--navy:#101827;--red:#e11d2e;--yellow:#ffdc20;--green:#15803d;--cream:#fff8ef;--ink:#202938;--line:#e0e3e8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--cream);color:var(--ink)}
 header{position:sticky;top:0;z-index:5;background:var(--navy);color:#fff;padding:12px 16px;box-shadow:0 4px 14px #0002}
-.top{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.brand{font-weight:900;font-size:1.1rem}.brand span{color:var(--yellow)}
+.top{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.brand{font-weight:900;font-size:1.1rem}.brand span{color:var(--yellow)}
 button,.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:750;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
-.primary{background:var(--green);color:white}.dark{background:#29364b;color:white}.yellow{background:var(--yellow);color:#111}.outline{border:1px solid #ccd2dc;background:white;color:var(--ink)}
-main{max-width:1200px;margin:auto;padding:18px}
-.notice{background:#fff7d6;border:1px solid #efd56b;border-radius:12px;padding:12px 14px;margin:14px 0;font-size:.93rem}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.filters button{background:#fff;border:1px solid #d7dbe2}.filters button.active{background:var(--navy);color:white}
-h1,h2{margin:20px 0 12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.card{background:white;border:1px solid #e0e3e8;border-radius:15px;overflow:hidden;box-shadow:0 4px 12px #0000000a;display:flex;flex-direction:column}
-.product-art{height:160px;display:grid;place-items:center;background:#fff7e8;padding:8px;border-bottom:1px solid #eee;font-size:3rem}
-.card-body{padding:14px;display:flex;flex-direction:column;gap:9px;flex:1}
-.category{font-size:.75rem;color:#697386;text-transform:uppercase;letter-spacing:.06em;font-weight:800}
-.card h3{font-size:1rem;margin:0}
-.price{font-size:1.3rem;font-weight:900;color:#bd1525}
-.duration{font-size:.82rem;background:#f1f3f5;padding:4px 8px;border-radius:6px;width:fit-content;font-weight:600;color:#495057}
-.card .primary{margin-top:auto;width:100%}
-.stockline{font-size:.82rem;color:#536174}.stockwarn{color:#b42318;font-weight:800}
-.cartbar{position:sticky;bottom:0;z-index:4;background:#fff;border-top:1px solid #d9dee7;padding:12px 16px;box-shadow:0 -4px 14px #0001}
-.cartinner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-dialog{border:0;border-radius:18px;padding:0;width:min(650px,calc(100% - 24px));max-height:90vh;overflow:auto;box-shadow:0 18px 80px #0005}dialog::backdrop{background:#101827aa}
-.modalhead{padding:16px 20px;background:var(--navy);color:white;display:flex;justify-content:space-between;align-items:center}
-.modalbody{padding:20px}.modalbody label{display:block;font-weight:750;margin:12px 0 5px}.modalbody input,.modalbody textarea,.modalbody select{width:100%;padding:12px;border:1px solid #cbd1da;border-radius:9px;font:inherit}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.cartitem{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #e6e8ed}
-.cartitem-main{min-width:0;flex:1}.cartitem-actions{display:flex;align-items:center;gap:8px}
-.adminbox{background:#f5f7fb;border:1px solid #d8dee8;border-radius:14px;padding:14px;margin:12px 0}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}.stat{background:white;padding:14px;border-radius:12px;border:1px solid #e0e3e8}.stat strong{display:block;font-size:1.4rem}
-.stock-editor{display:grid;grid-template-columns:1fr 100px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #e5e7eb}
-.hidden{display:none!important}
+button:disabled{opacity:.55;cursor:not-allowed}.primary{background:var(--green);color:white}.dark{background:#29364b;color:white}.yellow{background:var(--yellow);color:#111}.outline{border:1px solid #ccd2dc;background:white;color:var(--ink)}
+main{max-width:1200px;margin:auto;padding:18px}.notice{background:#fff7d6;border:1px solid #efd56b;border-radius:12px;padding:12px 14px;margin:14px 0;font-size:.93rem}
+.actions,.filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.filters button{background:#fff;border:1px solid #d7dbe2}.filters button.active{background:var(--navy);color:white}
+h1,h2{margin:20px 0 12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:white;border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 4px 12px #0000000a;display:flex;flex-direction:column}
+.product-art{height:180px;display:grid;place-items:center;background:#fff;padding:8px;border-bottom:1px solid #eee;overflow:hidden}.product-art img{max-width:100%;max-height:100%;object-fit:contain}
+.card-body{padding:14px;display:flex;flex-direction:column;gap:9px;flex:1}.category{font-size:.75rem;color:#697386;text-transform:uppercase;letter-spacing:.06em;font-weight:800}
+.card h3{font-size:1rem;margin:0}.price{font-size:1.3rem;font-weight:900;color:#bd1525}.duration{font-size:.82rem;background:#f1f3f5;padding:4px 8px;border-radius:6px;width:fit-content;font-weight:600;color:#495057}
+.card .primary{margin-top:auto;width:100%}.stockline{font-size:.82rem;color:#536174}.stockwarn{color:#b42318;font-weight:800}
+.cartbar{position:sticky;bottom:0;z-index:4;background:#fff;border-top:1px solid #d9dee7;padding:12px 16px;box-shadow:0 -4px 14px #0001}.cartinner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+dialog{border:0;border-radius:18px;padding:0;width:min(680px,calc(100% - 24px));max-height:90vh;overflow:auto;box-shadow:0 18px 80px #0005}dialog::backdrop{background:#101827aa}
+.modalhead{padding:16px 20px;background:var(--navy);color:white;display:flex;justify-content:space-between;align-items:center}.modalhead h3{margin:0}.modalbody{padding:20px}
+.modalbody label{display:block;font-weight:750;margin:12px 0 5px}.modalbody input,.modalbody textarea,.modalbody select{width:100%;padding:12px;border:1px solid #cbd1da;border-radius:9px;font:inherit}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.cartitem{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #e6e8ed}
+.cartitem-main{min-width:0;flex:1}.cartitem-actions{display:flex;align-items:center;gap:8px}.adminbox{background:#f5f7fb;border:1px solid #d8dee8;border-radius:14px;padding:14px;margin:12px 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}.stat{background:white;padding:14px;border-radius:12px;border:1px solid var(--line)}.stat strong{display:block;font-size:1.4rem}
+.hidden{display:none!important}.muted{color:#64748b;font-size:.9rem}.booking{background:white;border:1px solid var(--line);border-radius:10px;padding:12px;margin:9px 0}
 footer{text-align:center;padding:25px 16px 95px;color:#687385}
 @media(max-width:560px){main{padding:12px}.row2{grid-template-columns:1fr}.top{align-items:flex-start}.top .actions{margin:0}}
 </style>
 </head>
 <body>
-
-<header>
-  <div class="top">
-    <div class="brand">🎈 Família <span>JMRK</span> Brinquedos</div>
-    <div class="actions">
-      <button class="dark" onclick="openDialog('clientDialog')">Meus Agendamentos</button>
-      <button class="yellow" onclick="handleAdminLogin()">🔒 Área do Dono</button>
-    </div>
+<header><div class="top">
+  <div class="brand">🎈 Família <span>JMRK</span> Brinquedos</div>
+  <div class="actions">
+    <button class="dark" onclick="openDialog('clientDialog')">Meus Agendamentos</button>
+    <button class="yellow" onclick="handleAdminLogin()">🔒 Área do Dono</button>
   </div>
-</header>
-
+</div></header>
 <main>
-  <section class="notice">
-    <strong>📍 Atendimento:</strong> Itapevi e região (até 20km). Taxa de entrega fixa: <strong>R$ 30 (até 10km)</strong> e <strong>R$ 50 (11km a 20km)</strong>. Ganhe 1 brinde (Cavalinho ou Minhoga) na locação de qualquer combo!
-  </section>
-
+  <section class="notice"><strong>📍 Atendimento:</strong> Itapevi e região (até 20km). Taxa de entrega fixa: <strong>R$ 30 (até 10km)</strong> e <strong>R$ 50 (11km a 20km)</strong>. Ganhe 1 brinde (Cavalinho ou Minhoga) na locação de qualquer combo!</section>
   <div class="filters" id="categoryFilters">
-    <button class="active" onclick="filterCategory('todos')">Todos os Itens</button>
-    <button onclick="filterCategory('camas')">Cama Elástica</button>
-    <button onclick="filterCategory('piscinas')">Piscina de Bolinhas</button>
-    <button onclick="filterCategory('individuais')">Itens Individuais</button>
-    <button onclick="filterCategory('combos')">Combos Promocionais</button>
+    <button class="active" onclick="filterCategory('todos',this)">Todos os Itens</button>
+    <button onclick="filterCategory('camas',this)">Cama Elástica</button>
+    <button onclick="filterCategory('piscinas',this)">Piscina de Bolinhas</button>
+    <button onclick="filterCategory('individuais',this)">Itens Individuais</button>
+    <button onclick="filterCategory('combos',this)">Combos Promocionais</button>
   </div>
-
-  <h2>Catálogo Completo</h2>
-  <div class="grid" id="productGrid"></div>
+  <h2>Catálogo Completo</h2><div class="grid" id="productGrid"></div>
 </main>
+<div class="cartbar hidden" id="cartBar"><div class="cartinner">
+  <div><strong id="cartCount">0 item(ns) selecionado(s)</strong><div style="font-size:.9rem;color:#555">Total: <strong id="cartTotal" style="color:var(--red)">R$ 0,00</strong></div></div>
+  <button class="primary" onclick="openDialog('checkoutDialog')">Finalizar Agendamento 🛒</button>
+</div></div>
+<footer><p>Fale conosco: <strong id="footerPhoneDisplay">(11) 99231-2902</strong> | © 2026 Família JMRK Brinquedos</p></footer>
 
-<div class="cartbar hidden" id="cartBar">
-  <div class="cartinner">
-    <div>
-      <strong id="cartCount">0 item(ns) selecionado(s)</strong>
-      <div style="font-size:0.9rem; color:#555;">Total: <strong id="cartTotal" style="color:var(--red);">R$ 0,00</strong></div>
+<dialog id="checkoutDialog"><div class="modalhead"><h3>Finalizar Agendamento</h3><button class="outline" onclick="closeDialog('checkoutDialog')">✖</button></div>
+<div class="modalbody">
+  <h4>Seus Itens Selecionados:</h4><div id="checkoutCartList"></div><hr style="margin:15px 0;border:0;border-top:1px solid #eee">
+  <form id="bookingForm" onsubmit="submitBooking(event)">
+    <label>Seu Nome Completo:</label><input type="text" id="clientName" required maxlength="120" placeholder="Ex: Maria Silva">
+    <div class="row2"><div><label>Telefone / WhatsApp:</label><input type="tel" id="clientPhone" required maxlength="30" placeholder="(11) 99231-2902"></div>
+    <div><label>Data do Evento:</label><input type="date" id="eventDate" required></div></div>
+    <label>Endereço de Entrega (Rua, Número, Bairro):</label><input type="text" id="clientAddress" required maxlength="250" placeholder="Ex: Rua das Flores, 123 - Itapevi">
+    <label>Taxa de Entrega / Distância:</label><select id="shippingRate" onchange="updateCheckoutTotal()" required><option value="30">Até 10 km - R$ 30,00</option><option value="50">De 11 a 20 km - R$ 50,00</option></select>
+    <div style="margin:15px 0;font-size:1.05rem;background:#f9f9f9;padding:12px;border-radius:8px">
+      <div>Subtotal Brinquedos: <strong id="summarySubtotal">R$ 0,00</strong></div><div>Frete: <strong id="summaryShipping">R$ 30,00</strong></div>
+      <div style="font-size:1.2rem;color:var(--red);margin-top:5px">Total Geral: <strong id="summaryGrandTotal">R$ 0,00</strong></div>
     </div>
-    <button class="primary" onclick="openDialog('checkoutDialog')">Finalizar Agendamento 🛒</button>
-  </div>
-</div>
-
-<footer>
-  <p>Fale conosco: <strong id="footerPhoneDisplay">(11) 99231-2902</strong> | © 2026 Família JMRK Brinquedos</p>
-</footer>
-
-<!-- MODAL: FINALIZAR AGENDAMENTO -->
-<dialog id="checkoutDialog">
-  <div class="modalhead">
-    <h3>Finalizar Agendamento</h3>
-    <button class="outline" onclick="closeDialog('checkoutDialog')">✖</button>
-  </div>
-  <div class="modalbody">
-    <h4>Seus Itens Selecionados:</h4>
-    <div id="checkoutCartList"></div>
-    <hr style="margin:15px 0; border:0; border-top:1px solid #eee;">
-    
-    <form id="bookingForm" onsubmit="submitBooking(event)">
-      <label>Seu Nome Completo:</label>
-      <input type="text" id="clientName" required placeholder="Ex: Maria Silva">
-
-      <div class="row2">
-        <div>
-          <label>Telefone / WhatsApp:</label>
-          <input type="tel" id="clientPhone" required placeholder="(11) 99999-9999">
-        </div>
-        <div>
-          <label>Data do Evento:</label>
-          <input type="date" id="eventDate" required>
-        </div>
-      </div>
-
-      <label>Endereço de Entrega (Rua, Número, Bairro):</label>
-      <input type="text" id="clientAddress" required placeholder="Ex: Rua das Flores, 123 - Itapevi">
-
-      <label>Taxa de Entrega / Distância:</label>
-      <select id="shippingRate" onchange="updateCheckoutTotal()" required>
-        <option value="30">Até 10 km - R$ 30,00</option>
-        <option value="50">De 11 a 20 km - R$ 50,00</option>
-      </select>
-
-      <div style="margin: 15px 0; font-size:1.1rem; background:#f9f9f9; padding:12px; border-radius:8px;">
-        <div>Subtotal Brinquedos: <strong id="summarySubtotal">R$ 0,00</strong></div>
-        <div>Frete: <strong id="summaryShipping">R$ 30,00</strong></div>
-        <div style="font-size:1.25rem; color:var(--red); margin-top:5px;">Total Geral: <strong id="summaryGrandTotal">R$ 0,00</strong></div>
-      </div>
-
-      <button type="submit" class="primary" style="width:100%; font-size:1.1rem;">Enviar Agendamento via WhatsApp 📱</button>
-    </form>
-  </div>
-</dialog>
-
-<!-- MODAL: MEUS AGENDAMENTOS -->
-<dialog id="clientDialog">
-  <div class="modalhead">
-    <h3>Consultar Agendamentos</h3>
-    <button class="outline" onclick="closeDialog('clientDialog')">✖</button>
-  </div>
-  <div class="modalbody">
-    <p>Digite seu telefone para verificar seus pedidos salvos:</p>
-    <div style="display:flex; gap:8px;">
-      <input type="tel" id="searchPhone" placeholder="(11) 99999-9999">
-      <button class="dark" onclick="searchClientBookings()">Buscar</button>
+    <div class="adminbox"><strong>Confirmação do pedido</strong><p class="muted">Declaro que revisei os itens, a data, o endereço e os valores informados. Este pedido é uma solicitação de agendamento e depende da confirmação da empresa.</p>
+      <label style="display:flex;gap:9px;align-items:flex-start;font-weight:600"><input type="checkbox" id="contractAccepted" required style="width:auto;margin-top:4px"> Li e concordo com a confirmação acima.</label>
     </div>
-    <div id="clientBookingsResult" style="margin-top:15px;"></div>
-  </div>
-</dialog>
+    <button type="submit" class="primary" id="submitBookingButton" style="width:100%;font-size:1.05rem">Enviar Agendamento via WhatsApp 📱</button>
+  </form>
+</div></dialog>
 
-<!-- MODAL: ÁREA DO DONO -->
-<dialog id="adminDialog">
-  <div class="modalhead">
-    <h3>🔒 Painel Administrativo</h3>
-    <button class="outline" onclick="closeDialog('adminDialog')">✖</button>
-  </div>
-  <div class="modalbody">
-    <div class="stats">
-      <div class="stat">
-        <span>Agendamentos</span>
-        <strong id="statBookingsCount">0</strong>
-      </div>
-      <div class="stat">
-        <span>Faturamento Total</span>
-        <strong id="statRevenue" style="color:var(--green);">R$ 0,00</strong>
-      </div>
-    </div>
+<dialog id="clientDialog"><div class="modalhead"><h3>Consultar Agendamentos</h3><button class="outline" onclick="closeDialog('clientDialog')">✖</button></div>
+<div class="modalbody"><p>Por segurança, a consulta pública não pesquisa os dados privados do Firestore. Neste navegador, é possível consultar pedidos feitos anteriormente neste mesmo aparelho.</p>
+  <label>Digite seu telefone:</label><input type="tel" id="searchPhone" placeholder="(11) 99231-2902">
+  <button class="dark" style="margin-top:9px" onclick="searchClientBookings()">Buscar neste aparelho</button><div id="clientBookingsResult" style="margin-top:15px"></div>
+</div></dialog>
 
-    <div class="adminbox">
-      <h4>📱 Configuração do WhatsApp da Empresa</h4>
-      <label style="margin-top:0;">Número de Telefone (DDD + Número sem símbolos):</label>
-      <input type="text" id="adminPhoneInput" style="margin-bottom:8px;">
-      <button class="primary" onclick="saveAdminPhone()">Salvar Novo Telefone</button>
-    </div>
+<dialog id="adminDialog"><div class="modalhead"><h3>🔒 Painel Administrativo</h3><button class="outline" onclick="closeDialog('adminDialog')">✖</button></div>
+<div class="modalbody">
+  <p id="adminIdentity" class="muted"></p>
+  <div class="stats"><div class="stat"><span>Agendamentos</span><strong id="statBookingsCount">0</strong></div><div class="stat"><span>Faturamento Total</span><strong id="statRevenue" style="color:var(--green)">R$ 0,00</strong></div></div>
+  <div class="adminbox"><h4>📱 WhatsApp da Empresa</h4><label>Número (DDD + número, sem símbolos):</label><input type="text" id="adminPhoneInput" maxlength="15"><button class="primary" style="margin-top:8px" onclick="saveAdminPhone()">Salvar telefone</button></div>
+  <div class="adminbox"><h4>Estoque deste navegador</h4><p class="muted">O estoque inicial fica salvo neste navegador. A sincronização multiaparelho exige configurar também os documentos da coleção stock no Firestore.</p><div id="adminStockList"></div></div>
+  <div class="adminbox"><h4>Lista de Agendamentos Recebidos</h4><button class="dark" onclick="loadAdminData()">Atualizar pedidos</button><div id="adminBookingsList"></div></div>
+  <button class="outline" onclick="adminLogout()">Sair da conta administrativa</button>
+</div></dialog>
 
-    <div class="adminbox">
-      <h4>Controle de Estoque (Edite abaixo)</h4>
-      <div id="adminStockList"></div>
-    </div>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import {getFirestore,collection,doc,setDoc,getDocs,updateDoc,query,orderBy} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import {getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    <div class="adminbox">
-      <h4>Lista de Agendamentos Recebidos</h4>
-      <div id="adminBookingsList"></div>
-    </div>
-  </div>
-</dialog>
-
-<script>
-// SENHA DA ÁREA DO DONO
-const ADMIN_PASSWORD = "47739668";
-
-// CONFIGURAÇÃO DO TELEFONE DA EMPRESA (Pode ser alterado na Área do Dono ou direto aqui)
-let companyPhone = localStorage.getItem('jmrk_phone') || "5511992312902";
-
-// CATÁLOGO COMPLETO
-const initialProducts = [
-  // Cama Elástica
-  { id: 1, name: "Cama Elástica 2,00 Metros", category: "camas", price: 120, duration: "8 Horas", stock: 5, icon: "🎪" },
-  { id: 2, name: "Cama Elástica 2,44 Metros", category: "camas", price: 140, duration: "8 Horas", stock: 5, icon: "🎪" },
-  { id: 3, name: "Cama Elástica 3,05 Metros", category: "camas", price: 160, duration: "8 Horas", stock: 4, icon: "🎪" },
-
-  // Piscina de Bolinhas
-  { id: 4, name: "Piscina de Bolinhas 1x1 Metro", category: "piscinas", price: 120, duration: "8 Horas", stock: 4, icon: "🔵" },
-  { id: 5, name: "Piscina de Bolinhas 1,5x1,5 Metros", category: "piscinas", price: 140, duration: "8 Horas", stock: 4, icon: "🔵" },
-  { id: 6, name: "Piscina de Bolinhas 2x2 Metros", category: "piscinas", price: 160, duration: "8 Horas", stock: 3, icon: "🔵" },
-
-  // Itens Individuais
-  { id: 7, name: "Minhoga", category: "individuais", price: 20, duration: "8 Horas", stock: 6, icon: "🐛" },
-  { id: 8, name: "Cavalinho", category: "individuais", price: 20, duration: "8 Horas", stock: 6, icon: "🎠" },
-  { id: 9, name: "Gangorra Infantil", category: "individuais", price: 30, duration: "8 Horas", stock: 5, icon: "⚖️" },
-  { id: 10, name: "Escorregador Pequeno", category: "individuais", price: 30, duration: "8 Horas", stock: 5, icon: "🛝" },
-  { id: 11, name: "Escorregador Médio", category: "individuais", price: 40, duration: "8 Horas", stock: 4, icon: "🛝" },
-  { id: 12, name: "Escorregador Grande", category: "individuais", price: 60, duration: "8 Horas", stock: 3, icon: "🛝" },
-  { id: 13, name: "Jogo de Mesa com 4 Cadeiras", category: "individuais", price: 20, duration: "8 Horas", stock: 10, icon: "🪑" },
-  { id: 14, name: "Máquina de Algodão Doce", category: "individuais", price: 100, duration: "Por Hora", stock: 3, icon: "🍿" },
-  { id: 15, name: "Pipoqueira Elétrica", category: "individuais", price: 100, duration: "Por Hora", stock: 3, icon: "🍿" },
-  { id: 16, name: "Pebolim Infantil", category: "individuais", price: 150, duration: "8 Horas", stock: 4, icon: "⚽" },
-
-  // Combos Promocionais
-  { id: 17, name: "Combo 1 (Cama 2,00m + Piscina 1x1m)", category: "combos", price: 200, duration: "8 Horas + Brinde", stock: 5, icon: "⭐" },
-  { id: 18, name: "Combo 2 (Cama 2,44m + Piscina 1,5x1,5m)", category: "combos", price: 230, duration: "8 Horas + Brinde", stock: 5, icon: "⭐" },
-  { id: 19, name: "Combo 3 (Cama 3,05m + Piscina 1,5x1,5m)", category: "combos", price: 250, duration: "8 Horas + Brinde", stock: 4, icon: "⭐" },
-  { id: 20, name: "Combo 4 (Cama 3,05m + Piscina 2x2m)", category: "combos", price: 280, duration: "8 Horas + Brinde", stock: 3, icon: "⭐" }
-];
-
-let products = JSON.parse(localStorage.getItem('jmrk_products_v2')) || initialProducts;
-let bookings = JSON.parse(localStorage.getItem('jmrk_bookings_v2')) || [];
-let cart = [];
-
-function saveState() {
-  localStorage.setItem('jmrk_products_v2', JSON.stringify(products));
-  localStorage.setItem('jmrk_bookings_v2', JSON.stringify(bookings));
-  localStorage.setItem('jmrk_phone', companyPhone);
-}
-
-function updateFooterPhone() {
-  let display = companyPhone.replace(/^55/, '');
-  if (display.length === 11) {
-    display = `(${display.substring(0,2)}) ${display.substring(2,7)}-${display.substring(7)}`;
-  }
-  document.getElementById('footerPhoneDisplay').innerText = display;
-}
-
-function renderProducts(filter = 'todos') {
-  const grid = document.getElementById('productGrid');
-  grid.innerHTML = '';
-  const filtered = filter === 'todos' ? products : products.filter(p => p.category === filter);
-
-  filtered.forEach(p => {
-    const isOut = p.stock <= 0;
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <div class="product-art">${p.icon}</div>
-      <div class="card-body">
-        <span class="category">${p.category}</span>
-        <h3>${p.name}</h3>
-        <div class="price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
-        <div class="duration">⏱️ ${p.duration}</div>
-        <div class="stockline ${isOut ? 'stockwarn' : ''}">
-          ${isOut ? '❌ Indisponível' : `Disponíveis: ${p.stock} un.`}
-        </div>
-        <button class="primary" ${isOut ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''} onclick="addToCart(${p.id})">
-          ${isOut ? 'Esgotado' : 'Adicionar ao Carrinho 🛒'}
-        </button>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-}
-
-function filterCategory(cat) {
-  document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  renderProducts(cat);
-}
-
-function addToCart(productId) {
-  const product = products.find(p => p.id === productId);
-  if (!product || product.stock <= 0) return;
-
-  const itemInCart = cart.find(c => c.id === productId);
-  if (itemInCart) {
-    if (itemInCart.qty < product.stock) {
-      itemInCart.qty++;
-    } else {
-      alert('Quantidade máxima em estoque atingida.');
-      return;
-    }
-  } else {
-    cart.push({ ...product, qty: 1 });
-  }
-  updateCartBar();
-}
-
-function updateCartBar() {
-  const bar = document.getElementById('cartBar');
-  const countEl = document.getElementById('cartCount');
-  const totalEl = document.getElementById('cartTotal');
-
-  const totalItems = cart.reduce((acc, i) => acc + i.qty, 0);
-  const subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
-
-  if (totalItems > 0) {
-    bar.classList.remove('hidden');
-    countEl.innerText = `${totalItems} item(ns) selecionado(s)`;
-    totalEl.innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-  } else {
-    bar.classList.add('hidden');
-  }
-}
-
-function openDialog(id) {
-  if (id === 'checkoutDialog') renderCheckoutList();
-  document.getElementById(id).showModal();
-}
-
-function closeDialog(id) {
-  document.getElementById(id).close();
-}
-
-function renderCheckoutList() {
-  const list = document.getElementById('checkoutCartList');
-  list.innerHTML = '';
-  if (cart.length === 0) return;
-
-  cart.forEach(item => {
-    const row = document.createElement('div');
-    row.className = 'cartitem';
-    row.innerHTML = `
-      <div class="cartitem-main">
-        <strong>${item.name}</strong>
-        <div class="small">R$ ${item.price.toFixed(2)} x ${item.qty} = R$ ${(item.price * item.qty).toFixed(2)}</div>
-      </div>
-      <div class="cartitem-actions">
-        <button class="outline" onclick="changeQty(${item.id}, -1)">-</button>
-        <span>${item.qty}</span>
-        <button class="outline" onclick="changeQty(${item.id}, 1)">+</button>
-      </div>
-    `;
-    list.appendChild(row);
-  });
-  updateCheckoutTotal();
-}
-
-function changeQty(id, delta) {
-  const item = cart.find(c => c.id === id);
-  const product = products.find(p => p.id === id);
-  if (!item) return;
-
-  item.qty += delta;
-  if (item.qty > product.stock) item.qty = product.stock;
-  if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
-
-  updateCartBar();
-  renderCheckoutList();
-  if (cart.length === 0) closeDialog('checkoutDialog');
-}
-
-function updateCheckoutTotal() {
-  const shipping = parseFloat(document.getElementById('shippingRate').value) || 30;
-  const subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
-  const grandTotal = subtotal + shipping;
-
-  document.getElementById('summarySubtotal').innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-  document.getElementById('summaryShipping').innerText = `R$ ${shipping.toFixed(2).replace('.', ',')}`;
-  document.getElementById('summaryGrandTotal').innerText = `R$ ${grandTotal.toFixed(2).replace('.', ',')}`;
-}
-
-function submitBooking(e) {
-  e.preventDefault();
-  if (cart.length === 0) return;
-
-  const name = document.getElementById('clientName').value;
-  const phone = document.getElementById('clientPhone').value;
-  const date = document.getElementById('eventDate').value;
-  const address = document.getElementById('clientAddress').value;
-  const shipping = parseFloat(document.getElementById('shippingRate').value);
-  const subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
-  const total = subtotal + shipping;
-
-  const newBooking = { id: Date.now(), name, phone, date, address, items: [...cart], total };
-  bookings.push(newBooking);
-
-  cart.forEach(cItem => {
-    const prod = products.find(p => p.id === cItem.id);
-    if (prod) prod.stock -= cItem.qty;
-  });
-
-  saveState();
-  renderProducts();
-
-  let msg = `*Novo Agendamento - Família JMRK Brinquedos* 🎈\n\n`;
-  msg += `*Cliente:* ${name}\n`;
-  msg += `*Telefone:* ${phone}\n`;
-  msg += `*Data do Evento:* ${date}\n`;
-  msg += `*Endereço:* ${address}\n\n`;
-  msg += `*Itens Escolhidos:*\n`;
-  cart.forEach(i => { msg += `- ${i.name} (${i.qty}x)\n`; });
-  msg += `\n*Subtotal:* R$ ${subtotal.toFixed(2)}\n`;
-  msg += `*Frete:* R$ ${shipping.toFixed(2)}\n`;
-  msg += `*Total Geral:* R$ ${total.toFixed(2)}`;
-
-  window.open(`https://wa.me/${companyPhone}?text=${encodeURIComponent(msg)}`, '_blank');
-
-  cart = [];
-  updateCartBar();
-  closeDialog('checkoutDialog');
-  alert('Pedido gerado com sucesso! Redirecionando para o WhatsApp.');
-}
-
-function searchClientBookings() {
-  const phone = document.getElementById('searchPhone').value.trim();
-  const resContainer = document.getElementById('clientBookingsResult');
-  resContainer.innerHTML = '';
-  if (!phone) return;
-
-  const found = bookings.filter(b => b.phone.includes(phone));
-  if (found.length === 0) {
-    resContainer.innerHTML = '<p class="empty">Nenhum agendamento encontrado.</p>';
-    return;
-  }
-
-  found.forEach(b => {
-    const box = document.createElement('div');
-    box.style.background = '#f4f5f7'; box.style.padding = '10px'; box.style.borderRadius = '8px'; box.style.marginBottom = '10px';
-    box.innerHTML = `<strong>Data: ${b.date}</strong> | Total: R$ ${b.total.toFixed(2)}<br><small>Endereço: ${b.address}</small>`;
-    resContainer.appendChild(box);
-  });
-}
-
-function handleAdminLogin() {
-  const pass = prompt("🔐 Digite a senha da Área do Dono:");
-  if (pass === ADMIN_PASSWORD) {
-    renderAdminData();
-    openDialog('adminDialog');
-  } else if (pass !== null) {
-    alert("❌ Senha incorreta!");
-  }
-}
-
-function renderAdminData() {
-  const totalRevenue = bookings.reduce((acc, b) => acc + b.total, 0);
-  document.getElementById('statBookingsCount').innerText = bookings.length;
-  document.getElementById('statRevenue').innerText = `R$ ${totalRevenue.toFixed(2).replace('.', ',')}`;
-
-  document.getElementById('adminPhoneInput').value = companyPhone;
-
-  const stockContainer = document.getElementById('adminStockList');
-  stockContainer.innerHTML = '';
-  products.forEach(p => {
-    const row = document.createElement('div');
-    row.className = 'stock-editor';
-    row.innerHTML = `<span>${p.name}</span><input type="number" min="0" value="${p.stock}" onchange="updateStock(${p.id}, this.value)">`;
-    stockContainer.appendChild(row);
-  });
-
-  const bookingsContainer = document.getElementById('adminBookingsList');
-  bookingsContainer.innerHTML = '';
-  if (bookings.length === 0) {
-    bookingsContainer.innerHTML = '<p>Sem agendamentos registrados.</p>';
-    return;
-  }
-  bookings.forEach(b => {
-    const item = document.createElement('div');
-    item.style.background = 'white'; item.style.border = '1px solid #ddd'; item.style.padding = '10px'; item.style.borderRadius = '8px'; item.style.marginBottom = '8px';
-    item.innerHTML = `<strong>${b.name}</strong> (${b.phone}) - Data: ${b.date}<br><small>Total: R$ ${b.total.toFixed(2)} | End: ${b.address}</small>`;
-    bookingsContainer.appendChild(item);
-  });
-}
-
-function saveAdminPhone() {
-  const input = document.getElementById('adminPhoneInput').value.replace(/\D/g, '');
-  if (input.length >= 10) {
-    companyPhone = input.startsWith('55') ? input : '55' + input;
-    saveState();
-    updateFooterPhone();
-    alert('✅ Telefone do WhatsApp atualizado com sucesso!');
-  } else {
-    alert('❌ Por favor, digite um número válido com DDD.');
-  }
-}
-
-function updateStock(id, newStock) {
-  const prod = products.find(p => p.id === id);
-  if (prod) {
-    prod.stock = parseInt(newStock) || 0;
-    saveState();
-    renderProducts();
-  }
-}
-
-// Inicialização
-updateFooterPhone();
-renderProducts();
-</script>
-
-</body>
-</html>
+const firebaseConfig={
+  apiKey:"AIzaSyBno8wwormkqYdBkKAj3WWN6EvHZVv29wU",
+  authDomain:"familia-jmrk-brinquedos.firebaseapp.com",
+  databaseURL:"https://familia-jmrk-brinquedos-default-rtdb.firebaseio.com",
+  projectId:"familia-jmrk-brinquedos",
+  storageBucket:"familia-jmrk-brinquedos.firebasestorage.app",
+  messagingSenderId:"627753915274",
+  appId:"1:627753915274:web:c9808ea1119b61cccdee73",
+  measurementId:"G-HC9C3CMTBT"
+};
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const auth=getAuth(app);
+window.jmrkFirebase={db,
+                                                                               

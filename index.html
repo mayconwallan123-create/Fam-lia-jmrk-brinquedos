@@ -78,19 +78,19 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
 </div></dialog>
 
 <dialog id="clientDialog"><div class="modalhead"><h3>Consultar Agendamentos</h3><button class="outline" onclick="closeDialog('clientDialog')">✖</button></div>
-<div class="modalbody"><p>Neste navegador, é possível consultar pedidos feitos anteriormente neste mesmo aparelho.</p>
+<div class="modalbody"><p>Neste aparelho, é possível consultar pedidos salvos.</p>
   <label>Digite seu telefone:</label><input type="tel" id="searchPhone" placeholder="(11) 99231-2902">
-  <button class="dark" style="margin-top:9px" onclick="searchClientBookings()">Buscar neste aparelho</button><div id="clientBookingsResult" style="margin-top:15px"></div>
+  <button class="dark" style="margin-top:9px" onclick="searchClientBookings()">Buscar</button><div id="clientBookingsResult" style="margin-top:15px"></div>
 </div></dialog>
 
 <dialog id="adminDialog"><div class="modalhead"><h3>🔒 Painel Administrativo</h3><button class="outline" onclick="closeDialog('adminDialog')">✖</button></div>
 <div class="modalbody">
   <p id="adminIdentity" class="muted"></p>
   <div class="stats"><div class="stat"><span>Agendamentos</span><strong id="statBookingsCount">0</strong></div><div class="stat"><span>Faturamento Total</span><strong id="statRevenue" style="color:var(--green)">R$ 0,00</strong></div></div>
-  <div class="adminbox"><h4>📱 WhatsApp da Empresa</h4><label>Número (DDD + número, sem símbolos):</label><input type="text" id="adminPhoneInput" maxlength="15"><button class="primary" style="margin-top:8px" onclick="saveAdminPhone()">Salvar telefone</button></div>
-  <div class="adminbox"><h4>Estoque de Produtos</h4><div id="adminStockList"></div></div>
-  <div class="adminbox"><h4>Lista de Agendamentos Recebidos</h4><button class="dark" onclick="loadAdminData()">Atualizar pedidos</button><div id="adminBookingsList"></div></div>
-  <button class="outline" onclick="adminLogout()">Sair da conta administrativa</button>
+  <div class="adminbox"><h4>📱 WhatsApp da Empresa</h4><label>Número (DDD + número):</label><input type="text" id="adminPhoneInput" maxlength="15"><button class="primary" style="margin-top:8px" onclick="saveAdminPhone()">Salvar telefone</button></div>
+  <div class="adminbox"><h4>Estoque</h4><div id="adminStockList"></div></div>
+  <div class="adminbox"><h4>Lista de Agendamentos</h4><button class="dark" onclick="loadAdminData()">Atualizar</button><div id="adminBookingsList"></div></div>
+  <button class="outline" onclick="adminLogout()">Sair</button>
 </div></dialog>
 
 <script type="module">
@@ -140,39 +140,35 @@ const initialProducts=[
 {id:19,name:"Combo 3 (Cama 3,05m + Piscina 1,5x1,5m)",category:"combos",price:250,duration:"8 Horas + Brinde",stock:4,img:"https://via.placeholder.com/400x260?text=Combo+3"},
 {id:20,name:"Combo 4 (Cama 3,05m + Piscina 2x2m)",category:"combos",price:280,duration:"8 Horas + Brinde",stock:3,img:"https://via.placeholder.com/400x260?text=Combo+4"}
 ];
-let products=[...initialProducts];
-let bookings=[];
+
+let products=JSON.parse(localStorage.getItem('jmrk_products_v2')||'null')||initialProducts;
 let cart=[];
 let currentAdmin=null;
 let currentFilter='todos';
 let companyPhone=localStorage.getItem('jmrk_phone')||"5511992312902";
 
-function waitFirebase(){
- return new Promise((resolve,reject)=>{
-  if(window.jmrkFirebase) return resolve(window.jmrkFirebase);
-  let timer=setTimeout(()=>reject(new Error("Timeout Firebase")),4000);
-  window.addEventListener('jmrk-firebase-ready',()=>{clearTimeout(timer);resolve(window.jmrkFirebase);},{once:true});
- });
-}
+// Renderiza imediatamente sem esperar rede
+renderProducts();
+updateCartBar();
 
-async function initCatalog(){
- renderProducts(); // Desenha na tela imediatamente
+// Tenta atualizar do Firebase em segundo plano de forma totalmente segura
+window.addEventListener('jmrk-firebase-ready', async ()=>{
  try{
-  const {db,collection,getDocs,doc,setDoc}=await waitFirebase();
-  const snap=await getDocs(collection(db,'products'));
-  if(snap.empty){
-   console.log("Recriando produtos no Firestore...");
-   for(const item of initialProducts){
-    await setDoc(doc(db,'products',String(item.id)),item);
-   }
-  }else{
+  const db=window.jmrkFirebase.db;
+  const snap=await window.jmrkFirebase.getDocs(window.jmrkFirebase.collection(db,'products'));
+  if(!snap.empty){
    products=snap.docs.map(d=>d.data());
    renderProducts();
+  }else{
+   // Se o banco estiver vazio, popula automaticamente
+   for(const item of initialProducts){
+    await window.jmrkFirebase.setDoc(window.jmrkFirebase.doc(db,'products',String(item.id)),item);
+   }
   }
  }catch(e){
-  console.log("Usando catálogo padrão:",e);
+  console.log("Modo offline / erro Firestore:",e);
  }
-}
+});
 
 function renderProducts(filter=currentFilter){
  currentFilter=filter;
@@ -192,21 +188,35 @@ function renderProducts(filter=currentFilter){
 
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function filterCategory(cat,button){renderProducts(cat);}
-function addToCart(id){const p=products.find(x=>x.id===id);if(!p||p.stock<=0)return;const found=cart.find(x=>x.id===id);if(found){if(found.qty>=p.stock){alert('Quantidade máxima em estoque atingida.');return;}found.qty++;}else cart.push({...p,qty:1});updateCartBar();}
+function addToCart(id){const p=products.find(x=>x.id===id);if(!p||p.stock<=0)return;const found=cart.find(x=>x.id===id);if(found){if(found.qty>=p.stock){alert('Quantidade máxima atingida.');return;}found.qty++;}else cart.push({...p,qty:1});updateCartBar();}
 function updateCartBar(){const count=cart.reduce((a,x)=>a+x.qty,0),subtotal=cart.reduce((a,x)=>a+x.price*x.qty,0);document.getElementById('cartBar').classList.toggle('hidden',count===0);document.getElementById('cartCount').textContent=`${count} item(ns) selecionado(s)`;document.getElementById('cartTotal').textContent=money(subtotal);}
 function openDialog(id){if(id==='checkoutDialog')renderCheckoutList();document.getElementById(id).showModal();}
 function closeDialog(id){document.getElementById(id).close();}
 function renderCheckoutList(){const list=document.getElementById('checkoutCartList');list.innerHTML='';cart.forEach(i=>{const row=document.createElement('div');row.className='cartitem';row.innerHTML=`<div class="cartitem-main"><strong>${escapeHtml(i.name)}</strong><div class="muted">${money(i.price)} x ${i.qty} = ${money(i.price*i.qty)}</div></div><div class="cartitem-actions"><button type="button" class="outline" onclick="changeQty(${i.id},-1)">−</button><span>${i.qty}</span><button type="button" class="outline" onclick="changeQty(${i.id},1)">+</button></div>`;list.appendChild(row);});updateCheckoutTotal();}
 function changeQty(id,delta){const item=cart.find(x=>x.id===id),p=products.find(x=>x.id===id);if(!item)return;item.qty+=delta;if(item.qty>p.stock)item.qty=p.stock;if(item.qty<=0)cart=cart.filter(x=>x.id!==id);updateCartBar();renderCheckoutList();if(!cart.length)closeDialog('checkoutDialog');}
 function updateCheckoutTotal(){const ship=Number(document.getElementById('shippingRate').value||30),sub=cart.reduce((a,x)=>a+x.price*x.qty,0);document.getElementById('summarySubtotal').textContent=money(sub);document.getElementById('summaryShipping').textContent=money(ship);document.getElementById('summaryGrandTotal').textContent=money(sub+ship);}
+function saveLocal(){localStorage.setItem('jmrk_products_v2',JSON.stringify(products));}
 
 async function submitBooking(e){
- e.preventDefault();if(!cart.length){alert('Adicione pelo menos um brinquedo ao carrinho.');return;}
+ e.preventDefault();if(!cart.length){alert('Adicione pelo menos um brinquedo.');return;}
  const btn=document.getElementById('submitBookingButton');btn.disabled=true;btn.textContent='Salvando pedido...';
  try{
   const name=document.getElementById('clientName').value.trim(),phone=document.getElementById('clientPhone').value.trim(),date=document.getElementById('eventDate').value,address=document.getElementById('clientAddress').value.trim(),shipping=Number(document.getElementById('shippingRate').value),subtotal=cart.reduce((a,x)=>a+x.price*x.qty,0),total=subtotal+shipping;
-  if(!document.getElementById('contractAccepted').checked)throw new Error('É necessário confirmar a declaração antes de enviar.');
-  const {db,collection,doc,setDoc,updateDoc}=await waitFirebase();
-  const ref=doc(collection(db,'bookings'));const bookingId=ref.id;
-  const contractText='Declaro que revisei os itens, a data, o endereço e os valores informados. Este pedido é uma solicitação de agendamento e depende da confirmação da empresa.';
-  const record={id:bookingId,createdAt:new Date().toISOString(),name,phone,date,address,items:cart.map(i=>({id:i.id,name:i.name,qty:i.qty,price:i.price})),status:'pendente',totalText:money(total),contractSigned:true,contractText,contractSignedAt:new Date().toISOString(),subto
+  if(!document.getElementById('contractAccepted').checked)throw new Error('Confirme a declaração.');
+  
+  const fb=window.jmrkFirebase;
+  const ref=fb.doc(fb.collection(fb.db,'bookings'));
+  const bookingId=ref.id;
+  const contractText='Declaro que revisei os itens, a data, o endereço e os valores informados.';
+  const record={id:bookingId,createdAt:new Date().toISOString(),name,phone,date,address,items:cart.map(i=>({id:i.id,name:i.name,qty:i.qty,price:i.price})),status:'pendente',totalText:money(total),contractSigned:true,contractText,subtotal,shipping,total};
+  
+  await fb.setDoc(ref,record);
+
+  for(const ci of cart){
+   const p=products.find(x=>x.id===ci.id);
+   if(p){
+    p.stock=Math.max(0,p.stock-ci.qty);
+    try{ await fb.updateDoc(fb.doc(fb.db,'products',String(p.id)),{stock:p.stock}); }catch(err){console.error(err);}
+   }
+  }
+  saveLocal();rende

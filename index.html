@@ -78,7 +78,7 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
 </div></dialog>
 
 <dialog id="clientDialog"><div class="modalhead"><h3>Consultar Agendamentos</h3><button class="outline" onclick="closeDialog('clientDialog')">✖</button></div>
-<div class="modalbody"><p>Por segurança, a consulta pública não pesquisa os dados privados do Firestore. Neste navegador, é possível consultar pedidos feitos anteriormente neste mesmo aparelho.</p>
+<div class="modalbody"><p>Neste navegador, é possível consultar pedidos feitos anteriormente neste mesmo aparelho.</p>
   <label>Digite seu telefone:</label><input type="tel" id="searchPhone" placeholder="(11) 99231-2902">
   <button class="dark" style="margin-top:9px" onclick="searchClientBookings()">Buscar neste aparelho</button><div id="clientBookingsResult" style="margin-top:15px"></div>
 </div></dialog>
@@ -88,7 +88,7 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
   <p id="adminIdentity" class="muted"></p>
   <div class="stats"><div class="stat"><span>Agendamentos</span><strong id="statBookingsCount">0</strong></div><div class="stat"><span>Faturamento Total</span><strong id="statRevenue" style="color:var(--green)">R$ 0,00</strong></div></div>
   <div class="adminbox"><h4>📱 WhatsApp da Empresa</h4><label>Número (DDD + número, sem símbolos):</label><input type="text" id="adminPhoneInput" maxlength="15"><button class="primary" style="margin-top:8px" onclick="saveAdminPhone()">Salvar telefone</button></div>
-  <div class="adminbox"><h4>Estoque no Firestore</h4><p class="muted">Os dados abaixo refletem o estoque sincronizado do banco de dados.</p><div id="adminStockList"></div></div>
+  <div class="adminbox"><h4>Estoque de Produtos</h4><div id="adminStockList"></div></div>
   <div class="adminbox"><h4>Lista de Agendamentos Recebidos</h4><button class="dark" onclick="loadAdminData()">Atualizar pedidos</button><div id="adminBookingsList"></div></div>
   <button class="outline" onclick="adminLogout()">Sair da conta administrativa</button>
 </div></dialog>
@@ -96,7 +96,7 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {getFirestore,collection,doc,setDoc,getDocs,updateDoc,query,orderBy} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import {getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import {getAuth,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 const firebaseConfig={
   apiKey:"AIzaSyBno8wwormkqYdBkKAj3WWN6EvHZVv29wU",
@@ -140,44 +140,55 @@ const initialProducts=[
 {id:19,name:"Combo 3 (Cama 3,05m + Piscina 1,5x1,5m)",category:"combos",price:250,duration:"8 Horas + Brinde",stock:4,img:"https://via.placeholder.com/400x260?text=Combo+3"},
 {id:20,name:"Combo 4 (Cama 3,05m + Piscina 2x2m)",category:"combos",price:280,duration:"8 Horas + Brinde",stock:3,img:"https://via.placeholder.com/400x260?text=Combo+4"}
 ];
-let products=[];
+let products=[...initialProducts];
 let bookings=JSON.parse(localStorage.getItem('jmrk_bookings_v2')||'[]');
 let cart=[];
 let currentAdmin=null;
 let currentFilter='todos';
 let companyPhone=localStorage.getItem('jmrk_phone')||"5511992312902";
 
-function waitFirebase(){return new Promise((resolve,reject)=>{if(window.jmrkFirebase)return resolve(window.jmrkFirebase);let timer=setTimeout(()=>reject(new Error("Firebase não carregou. Atualize a página e tente novamente.")),10000);window.addEventListener('jmrk-firebase-ready',()=>{clearTimeout(timer);resolve(window.jmrkFirebase)},{once:true});});}
+function waitFirebase(){
+ return new Promise((resolve,reject)=>{
+  if(window.jmrkFirebase) return resolve(window.jmrkFirebase);
+  let timer=setTimeout(()=>reject(new Error("Timeout Firebase")),4000);
+  window.addEventListener('jmrk-firebase-ready',()=>{clearTimeout(timer);resolve(window.jmrkFirebase);},{once:true});
+ });
+}
 
-async function fetchProductsFromFirestore(){
+async function initCatalog(){
+ renderProducts(); // Desenha a lista imediatamente na tela!
  try{
   const {db,collection,getDocs,doc,setDoc}=await waitFirebase();
   const snap=await getDocs(collection(db,'products'));
   if(snap.empty){
-   console.log("Semeando catálogo de produtos no Firestore...");
    for(const item of initialProducts){
     await setDoc(doc(db,'products',String(item.id)),item);
    }
-   products=[...initialProducts];
   }else{
    products=snap.docs.map(d=>d.data());
+   renderProducts();
   }
-  renderProducts();
  }catch(e){
-  console.error("Erro ao carregar do Firestore, usando fallback local:",e);
-  products=JSON.parse(localStorage.getItem('jmrk_products_v2')||'null')||initialProducts;
-  renderProducts();
+  console.log("Mantendo catálogo local devido ao Firestore:",e);
  }
 }
 
 function renderProducts(filter=currentFilter){
- currentFilter=filter;const grid=document.getElementById('productGrid');grid.innerHTML='';
+ currentFilter=filter;
+ const grid=document.getElementById('productGrid');
+ if(!grid) return;
+ grid.innerHTML='';
  const list=filter==='todos'?products:products.filter(p=>p.category===filter);
- list.forEach(p=>{const out=p.stock<=0;const card=document.createElement('article');card.className='card';
- card.innerHTML=`<div class="product-art"><img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy"></div><div class="card-body"><span class="category">${escapeHtml(p.category)}</span><h3>${escapeHtml(p.name)}</h3><div class="price">${money(p.price)}</div><div class="duration">⏱️ ${escapeHtml(p.duration)}</div><div class="stockline ${out?'stockwarn':''}">${out?'❌ Indisponível':`Disponíveis: ${p.stock} un.`}</div><button class="primary" ${out?'disabled':''} onclick="addToCart(${p.id})">${out?'Esgotado':'Adicionar ao Carrinho 🛒'}</button></div>`;
- grid.appendChild(card);});
- document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));
+ list.forEach(p=>{
+  const out=p.stock<=0;
+  const card=document.createElement('article');
+  card.className='card';
+  card.innerHTML=`<div class="product-art"><img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy"></div><div class="card-body"><span class="category">${escapeHtml(p.category)}</span><h3>${escapeHtml(p.name)}</h3><div class="price">${money(p.price)}</div><div class="duration">⏱️ ${escapeHtml(p.duration)}</div><div class="stockline ${out?'stockwarn':''}">${out?'❌ Indisponível':`Disponíveis: ${p.stock} un.`}</div><button class="primary" ${out?'disabled':''} onclick="addToCart(${p.id})">${out?'Esgotado':'Adicionar ao Carrinho 🛒'}</button></div>`;
+  grid.appendChild(card);
+ });
+ document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick').includes(`'${filter}'`)));
 }
+
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function filterCategory(cat,button){renderProducts(cat);}
 function addToCart(id){const p=products.find(x=>x.id===id);if(!p||p.stock<=0)return;const found=cart.find(x=>x.id===id);if(found){if(found.qty>=p.stock){alert('Quantidade máxima em estoque atingida.');return;}found.qty++;}else cart.push({...p,qty:1});updateCartBar();}
@@ -198,75 +209,4 @@ async function submitBooking(e){
   const {db,collection,doc,setDoc,updateDoc}=await waitFirebase();
   const ref=doc(collection(db,'bookings'));const bookingId=ref.id;
   const contractText='Declaro que revisei os itens, a data, o endereço e os valores informados. Este pedido é uma solicitação de agendamento e depende da confirmação da empresa.';
-  const record={id:bookingId,createdAt:new Date().toISOString(),name,phone,date,address,items:cart.map(i=>({id:i.id,name:i.name,qty:i.qty,price:i.price})),status:'pendente',totalText:money(total),contractSigned:true,contractText,contractSignedAt:new Date().toISOString(),subtotal,shipping,total};
-  
-  await setDoc(ref,record);
-
-  for(const ci of cart){
-   const p=products.find(x=>x.id===ci.id);
-   if(p){
-    const newStock=Math.max(0,p.stock-ci.qty);
-    p.stock=newStock;
-    try{ await updateDoc(doc(db,'products',String(p.id)),{stock:newStock}); }catch(err){ console.error("Erro ao atualizar estoque no Firestore:",err); }
-   }
-  }
-
-  bookings.push(record);saveLocal();renderProducts();updateCartBar();
-  const lines=record.items.map(i=>`• ${i.name} - ${i.qty} un. (${money(i.price*i.qty)})`).join('\n');
-  const msg=`*NOVO PEDIDO - FAMÍLIA JMRK BRINQUEDOS*\n\nCliente: ${name}\nTelefone: ${phone}\nData: ${date}\nEndereço: ${address}\n\n${lines}\n\nSubtotal: ${money(subtotal)}\nEntrega: ${money(shipping)}\n*Total: ${money(total)}*\n\nPedido registrado como PENDENTE. Aguardando confirmação da empresa.`;
-  const wa=`https://wa.me/${companyPhone}?text=${encodeURIComponent(msg)}`;
-  document.getElementById('bookingForm').reset();cart=[];updateCartBar();closeDialog('checkoutDialog');
-  alert('Pedido salvo no Firebase! O WhatsApp será aberto para enviar os detalhes à empresa.');
-  window.open(wa,'_blank','noopener');
- }catch(err){console.error(err);alert('Não foi possível salvar o pedido no Firebase. Detalhe: '+(err.message||err));}
- finally{btn.disabled=false;btn.textContent='Enviar Agendamento via WhatsApp 📱';}
-}
-
-function searchClientBookings(){const phone=document.getElementById('searchPhone').value.replace(/\D/g,''),out=document.getElementById('clientBookingsResult');if(!phone){out.textContent='Digite seu telefone.';return;}const found=bookings.filter(b=>(b.phone||'').replace(/\D/g,'')===phone);out.innerHTML=found.length?found.map(b=>`<div class="booking"><strong>${escapeHtml(b.date)}</strong><p>${escapeHtml((b.items||[]).map(i=>`${i.name} (${i.qty})`).join(', '))}</p><p>Status: ${escapeHtml(b.status||'Pendente')} | Total: ${escapeHtml(b.totalText||money(b.total))}</p></div>`).join(''):'Nenhum pedido deste telefone foi encontrado neste aparelho. Para consultar pedidos feitos em outro dispositivo, fale com a empresa pelo WhatsApp.';}
-async function handleAdminLogin(){
- try{
-  const {auth,signInWithEmailAndPassword}=await waitFirebase();
-  const email=prompt('Digite o e-mail cadastrado no Firebase Authentication:');if(!email)return;
-  const password=prompt('Digite a senha da conta Firebase:');if(!password)return;
-  const credential=await signInWithEmailAndPassword(auth,email.trim(),password);
-  if(credential.user.uid!==ADMIN_UID){await window.jmrkFirebase.signOut(auth);throw new Error('Esta conta não corresponde ao administrador autorizado nas regras do Firestore.');}
-  currentAdmin=credential.user;document.getElementById('adminIdentity').textContent='Conectado como '+credential.user.email;document.getElementById('adminPhoneInput').value=companyPhone;openDialog('adminDialog');await loadAdminData();
- }catch(err){console.error(err);alert('Não foi possível entrar na área administrativa: '+(err.message||err));}
-}
-async function adminLogout(){try{const {auth,signOut}=await waitFirebase();await signOut(auth);currentAdmin=null;closeDialog('adminDialog');}catch(e){alert(e.message);}}
-async function loadAdminData(){
- if(!currentAdmin||currentAdmin.uid!==ADMIN_UID){alert('Acesso administrativo não autorizado.');return;}
- const list=document.getElementById('adminBookingsList');list.textContent='Carregando pedidos...';
- try{
-  const {db,collection,getDocs,query,orderBy}=await waitFirebase();let snap;
-  try{snap=await getDocs(query(collection(db,'bookings'),orderBy('createdAt','desc')));}catch(_){snap=await getDocs(collection(db,'bookings'));}
-  const rows=snap.docs.map(d=>d.data());bookings=rows;localStorage.setItem('jmrk_bookings_v2',JSON.stringify(bookings));
-  document.getElementById('statBookingsCount').textContent=rows.length;
-  document.getElementById('statRevenue').textContent=money(rows.reduce((a,b)=>a+Number(b.total||0),0));
-  list.innerHTML=rows.length?rows.map(b=>`<div class="booking"><strong>${escapeHtml(b.name||'Cliente')}</strong> — ${escapeHtml(b.date||'Sem data')}<p>${escapeHtml((b.items||[]).map(i=>`${i.name} x${i.qty}`).join(', '))}</p><p>Telefone: ${escapeHtml(b.phone||'Não informado')}<br>Endereço: ${escapeHtml(b.address||'')}<br>Status: <strong>${escapeHtml(b.status||'pendente')}</strong> | Total: ${escapeHtml(b.totalText||money(b.total))}</p><button class="outline" onclick="changeBookingStatus('${escapeHtml(b.id)}','confirmado')">Marcar confirmado</button> <button class="outline" onclick="changeBookingStatus('${escapeHtml(b.id)}','cancelado')">Cancelar</button></div>`).join(''):'Nenhum pedido encontrado no Firestore.';
-  renderAdminStock();
- }catch(err){console.error(err);list.textContent='Erro ao carregar pedidos: '+err.message;alert('O Firebase recusou a leitura. Confira se a conta autenticada tem o UID autorizado nas regras.');}
-}
-async function changeBookingStatus(id,status){if(!currentAdmin||currentAdmin.uid!==ADMIN_UID)return;try{const {db,doc,updateDoc}=await waitFirebase();await updateDoc(doc(db,'bookings',id),{status});await loadAdminData();}catch(e){alert('Não foi possível atualizar: '+e.message);}}
-function renderAdminStock(){const box=document.getElementById('adminStockList');box.innerHTML=products.map(p=>`<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid #e5e7eb"><span>${escapeHtml(p.name)}</span><input aria-label="Estoque ${escapeHtml(p.name)}" type="number" min="0" max="999" value="${p.stock}" style="width:85px;padding:8px" onchange="updateRemoteStock(${p.id},this.value)"></div>`).join('');}
-
-async function updateRemoteStock(id,value){
- const p=products.find(x=>x.id===id);if(!p)return;
- const newStock=Math.max(0,Math.min(999,Number(value)||0));
- p.stock=newStock;
- saveLocal();renderProducts();
- try{
-  const {db,doc,updateDoc}=await waitFirebase();
-  await updateDoc(doc(db,'products',String(id)),{stock:newStock});
- }catch(e){console.error("Erro ao salvar estoque remoto:",e);}
-}
-
-function saveAdminPhone(){const value=document.getElementById('adminPhoneInput').value.replace(/\D/g,'');if(value.length<12||value.length>13){alert('Informe o telefone com código do país, DDD e número. Exemplo: 5511999999999');return;}companyPhone=value;localStorage.setItem('jmrk_phone',value);document.getElementById('footerPhoneDisplay').textContent='+'+value;alert('Telefone atualizado neste navegador.');}
-
-document.getElementById('footerPhoneDisplay').textContent='+'+companyPhone;
-document.getElementById('eventDate').min=new Date().toISOString().slice(0,10);
-fetchProductsFromFirestore();
-updateCartBar();
-</script>
-</body>
-</html>
+  const record={id:bookingId,createdAt:new Date().toISOString(),name

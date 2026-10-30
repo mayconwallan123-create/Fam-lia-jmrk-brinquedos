@@ -116,13 +116,14 @@ try{
   window.jmrkFirebase={db,auth,collection,doc,setDoc,getDocs,updateDoc,query,orderBy,signInWithEmailAndPassword,signOut};
   window.dispatchEvent(new Event("jmrk-firebase-ready"));
 }catch(e){
-  console.error("Erro ao iniciar Firebase:", e);
+  console.error("Erro Firebase:", e);
 }
 </script>
 
 <script>
 const ADMIN_UID="ygY5ZDbEHagoxaFC0yPlu9gFPYJ3";
 const money=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
 const initialProducts=[
 {id:1,name:"Cama Elástica 2,00 Metros",category:"camas",price:120,duration:"8 Horas",stock:5,img:"https://via.placeholder.com/400x260?text=Cama+2%2C00m"},
 {id:2,name:"Cama Elástica 2,44 Metros",category:"camas",price:140,duration:"8 Horas",stock:5,img:"https://via.placeholder.com/400x260?text=Cama+2%2C44m"},
@@ -146,15 +147,13 @@ const initialProducts=[
 {id:20,name:"Combo 4 (Cama 3,05m + Piscina 2x2m)",category:"combos",price:280,duration:"8 Horas + Brinde",stock:3,img:"https://via.placeholder.com/400x260?text=Combo+4"}
 ];
 
-let products=JSON.parse(localStorage.getItem('jmrk_products_v2')||'null')||initialProducts;
+let products=[...initialProducts];
 let cart=[];
 let currentAdmin=null;
 let currentFilter='todos';
 let companyPhone=localStorage.getItem('jmrk_phone')||"5511992312902";
 
-// Renderização imediata para garantir que nunca falha a abertura
-renderProducts();
-updateCartBar();
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
 function renderProducts(filter=currentFilter){
  currentFilter=filter;
@@ -172,7 +171,6 @@ function renderProducts(filter=currentFilter){
  document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick')?.includes(`'${filter}'`)));
 }
 
-function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function filterCategory(cat,button){renderProducts(cat);}
 function addToCart(id){const p=products.find(x=>x.id===id);if(!p||p.stock<=0)return;const found=cart.find(x=>x.id===id);if(found){if(found.qty>=p.stock){alert('Quantidade máxima atingida.');return;}found.qty++;}else cart.push({...p,qty:1});updateCartBar();}
 function updateCartBar(){const count=cart.reduce((a,x)=>a+x.qty,0),subtotal=cart.reduce((a,x)=>a+x.price*x.qty,0);document.getElementById('cartBar').classList.toggle('hidden',count===0);document.getElementById('cartCount').textContent=`${count} item(ns) selecionado(s)`;document.getElementById('cartTotal').textContent=money(subtotal);}
@@ -181,7 +179,6 @@ function closeDialog(id){document.getElementById(id).close();}
 function renderCheckoutList(){const list=document.getElementById('checkoutCartList');list.innerHTML='';cart.forEach(i=>{const row=document.createElement('div');row.className='cartitem';row.innerHTML=`<div class="cartitem-main"><strong>${escapeHtml(i.name)}</strong><div class="muted">${money(i.price)} x ${i.qty} = ${money(i.price*i.qty)}</div></div><div class="cartitem-actions"><button type="button" class="outline" onclick="changeQty(${i.id},-1)">−</button><span>${i.qty}</span><button type="button" class="outline" onclick="changeQty(${i.id},1)">+</button></div>`;list.appendChild(row);});updateCheckoutTotal();}
 function changeQty(id,delta){const item=cart.find(x=>x.id===id),p=products.find(x=>x.id===id);if(!item)return;item.qty+=delta;if(item.qty>p.stock)item.qty=p.stock;if(item.qty<=0)cart=cart.filter(x=>x.id!==id);updateCartBar();renderCheckoutList();if(!cart.length)closeDialog('checkoutDialog');}
 function updateCheckoutTotal(){const ship=Number(document.getElementById('shippingRate').value||30),sub=cart.reduce((a,x)=>a+x.price*x.qty,0);document.getElementById('summarySubtotal').textContent=money(sub);document.getElementById('summaryShipping').textContent=money(ship);document.getElementById('summaryGrandTotal').textContent=money(sub+ship);}
-function saveLocal(){localStorage.setItem('jmrk_products_v2',JSON.stringify(products));}
 
 async function submitBooking(e){
  e.preventDefault();if(!cart.length){alert('Adicione pelo menos um brinquedo.');return;}
@@ -191,11 +188,12 @@ async function submitBooking(e){
   if(!document.getElementById('contractAccepted').checked)throw new Error('Confirme a declaração.');
   
   const fb=window.jmrkFirebase;
+  let record=null;
   if(fb && fb.db){
     const ref=fb.doc(fb.collection(fb.db,'bookings'));
     const bookingId=ref.id;
     const contractText='Declaro que revisei os itens, a data, o endereço e os valores informados.';
-    const record={id:bookingId,createdAt:new Date().toISOString(),name,phone,date,address,items:cart.map(i=>({id:i.id,name:i.name,qty:i.qty,price:i.price})),status:'pendente',totalText:money(total),contractSigned:true,contractText,subtotal,shipping,total};
+    record={id:bookingId,createdAt:new Date().toISOString(),name,phone,date,address,items:cart.map(i=>({id:i.id,name:i.name,qty:i.qty,price:i.price})),status:'pendente',totalText:money(total),contractSigned:true,contractText,subtotal,shipping,total};
     await fb.setDoc(ref,record);
     for(const ci of cart){
      const p=products.find(x=>x.id===ci.id);
@@ -205,8 +203,12 @@ async function submitBooking(e){
      }
     }
   }
-  saveLocal();renderProducts();updateCartBar();
-  const lines=record?.items?.map(i=>`• ${i.name} - ${i.qty} un. (${money(i.price*i.qty)})`).join('\n')||'';
+  renderProducts();updateCartBar();
+  const lines=cart.map(i=>`• ${i.name} - ${i.qty} un. (${money(i.price*i.qty)})`).join('\n');
   const msg=`*NOVO PEDIDO - FAMÍLIA JMRK BRINQUEDOS*\n\nCliente: ${name}\nTelefone: ${phone}\nData: ${date}\nEndereço: ${address}\n\n${lines}\n\nSubtotal: ${money(subtotal)}\nEntrega: ${money(shipping)}\n*Total: ${money(total)}*`;
   const wa=`https://wa.me/${companyPhone}?text=${encodeURIComponent(msg)}`;
-  document.getElementById('bookingForm').reset();cart=[];updateC
+  document.getElementById('bookingForm').reset();cart=[];updateCartBar();closeDialog('checkoutDialog');
+  alert('Pedido salvo com sucesso! Abrindo o WhatsApp...');
+  window.open(wa,'_blank','noopener');
+ }catch(err){console.error(err);alert('Erro ao salvar: '+(err.message||err));}
+ finally{btn.disabled=false;btn.textContent='Enviar 

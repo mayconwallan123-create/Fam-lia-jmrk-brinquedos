@@ -6,30 +6,52 @@
 <meta name="theme-color" content="#101827">
 <title>Família JMRK Brinquedos | Catálogo e Agendamento</title>
 <style>
-:root{--navy:#101827;--red:#e11d2e;--yellow:#ffdc20;--green:#15803d;--cream:#fff8ef;--ink:#202938;--line:#e0e3e8}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--cream);color:var(--ink)}
-header{position:sticky;top:0;z-index:5;background:var(--navy);color:#fff;padding:12px 16px;box-shadow:0 4px 14px #0002}
-.top{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.brand{font-weight:900;font-size:1.1rem}.brand span{color:var(--yellow)}
-button,.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:750;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
-button:disabled{opacity:.55;cursor:not-allowed}.primary{background:var(--green);color:white}.dark{background:#29364b;color:white}.yellow{background:var(--yellow);color:#111}.outline{border:1px solid #ccd2dc;background:white;color:var(--ink)}
-main{max-width:1200px;margin:auto;padding:18px}.notice{background:#fff7d6;border:1px solid #efd56b;border-radius:12px;padding:12px 14px;margin:14px 0;font-size:.93rem}
-.actions,.filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.filters button{background:#fff;border:1px solid #d7dbe2}.filters button.active{background:var(--navy);color:white}
-h1,h2{margin:20px 0 12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.card{background:white;border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 4px 12px #0000000a;display:flex;flex-direction:column}
-.product-art{height:180px;display:grid;place-items:center;background:#fff;padding:8px;border-bottom:1px solid #eee;overflow:hidden}.product-art img{max-width:100%;max-height:100%;object-fit:contain}
-.card-body{padding:14px;display:flex;flex-direction:column;gap:9px;flex:1}.category{font-size:.75rem;color:#697386;text-transform:uppercase;letter-spacing:.06em;font-weight:800}
-.card h3{font-size:1rem;margin:0}.price{font-size:1.3rem;font-weight:900;color:#bd1525}.duration{font-size:.82rem;background:#f1f3f5;padding:4px 8px;border-radius:6px;width:fit-content;font-weight:600;color:#495057}
-.card .primary{margin-top:auto;width:100%}.stockline{font-size:.82rem;color:#536174}.stockwarn{color:#b42318;font-weight:800}
-.cartbar{position:sticky;bottom:0;z-index:4;background:#fff;border-top:1px solid #d9dee7;padding:12px 16px;box-shadow:0 -4px 14px #0001}.cartinner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-dialog{border:0;border-radius:18px;padding:0;width:min(680px,calc(100% - 24px));max-height:90vh;overflow:auto;box-shadow:0 18px 80px #0005}dialog::backdrop{background:#101827aa}
-.modalhead{padding:16px 20px;background:var(--navy);color:white;display:flex;justify-content:space-between;align-items:center}.modalhead h3{margin:0}.modalbody{padding:20px}
-.modalbody label{display:block;font-weight:750;margin:12px 0 5px}.modalbody input,.modalbody textarea,.modalbody select{width:100%;padding:12px;border:1px solid #cbd1da;border-radius:9px;font:inherit}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.cartitem{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #e6e8ed}
-.cartitem-main{min-width:0;flex:1}.cartitem-actions{display:flex;align-items:center;gap:8px}.adminbox{background:#f5f7fb;border:1px solid #d8dee8;border-radius:14px;padding:14px;margin:12px 0}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}.stat{background:white;padding:14px;border-radius:12px;border:1px solid var(--line)}.stat strong{display:block;font-size:1.4rem}
-.hidden{display:none!important}.muted{color:#64748b;font-size:.9rem}.booking{background:white;border:1px solid var(--line);border-radius:10px;padding:12px;margin:9px 0}
-footer{text-align:center;padding:25px 16px 95px;color:#687385}
-@media(max-width:560px){main{padding:12px}.row2{grid-template-columns:1fr}.top{align-items:flex-start}.top .actions{margin:0}}
+:root{--navy:#101827;--red:#e11d2e;--yellow:#ffdc20;--green:#15803d;--cream:#fff8ef;--ink:#202938;--line:#e0e3e8;--shadow:0 6px 20px rgba(0,0,0,0.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}
+header{position:sticky;top:0;z-index:5;background:var(--navy);color:#fff;padding:16px 20px;box-shadow:0 4px 14px #0002}
+.top{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:900;font-size:1.3rem}.brand span{color:var(--yellow)}
+button,.btn{border:0;border-radius:12px;padding:13px 16px;font-weight:750;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:0.2s ease}
+button:hover{transform:translateY(-2px)}
+button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.primary{background:var(--green);color:white}.dark{background:#29364b;color:white}.yellow{background:var(--yellow);color:#111}.outline{border:1px solid #ccd2dc;background:white;color:var(--ink)}
+main{max-width:1200px;margin:auto;padding:24px 16px}
+.notice{background:#fff7d6;border:1px solid #efd56b;border-radius:14px;padding:16px;margin:20px 0;font-size:1rem;line-height:1.5}
+.actions,.filters{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.filters button{background:#fff;border:1px solid #d7dbe2}.filters button.active{background:var(--navy);color:white}
+h1,h2{margin:24px 0 16px;font-size:clamp(1.6rem, 3vw, 2.2rem)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.card{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:0.2s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,0.12)}
+.product-art{height:200px;display:grid;place-items:center;background:#fff;padding:12px;border-bottom:1px solid #eee;overflow:hidden}
+.product-art img{max-width:100%;max-height:100%;object-fit:contain}
+.card-body{padding:18px;display:flex;flex-direction:column;gap:12px;flex:1}
+.category{font-size:.8rem;color:#697386;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.card h3{font-size:1.1rem;margin:0;line-height:1.3}
+.price{font-size:1.5rem;font-weight:900;color:#bd1525}
+.duration{font-size:.88rem;background:#f1f3f5;padding:6px 10px;border-radius:8px;width:fit-content;font-weight:600;color:#495057}
+.card .primary{margin-top:auto;width:100%}.stockline{font-size:.88rem;color:#536174}.stockwarn{color:#b42318;font-weight:800}
+.cartbar{position:sticky;bottom:0;z-index:4;background:#fff;border-top:1px solid #d9dee7;padding:16px 20px;box-shadow:0 -4px 14px #0001}
+.cartinner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+dialog{border:0;border-radius:20px;padding:0;width:min(720px,calc(100% - 24px));max-height:90vh;overflow:auto;box-shadow:0 20px 90px #0005}
+dialog::backdrop{background:#101827aa}
+.modalhead{padding:20px 24px;background:var(--navy);color:white;display:flex;justify-content:space-between;align-items:center}
+.modalhead h3{margin:0}
+.modalbody{padding:24px}
+.modalbody label{display:block;font-weight:750;margin:16px 0 8px}
+.modalbody input,.modalbody textarea,.modalbody select{width:100%;padding:14px;border:1px solid #cbd1da;border-radius:10px;font:inherit}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cartitem{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #e6e8ed}
+.cartitem-main{min-width:0;flex:1}.cartitem-actions{display:flex;align-items:center;gap:10px}
+.adminbox{background:#f5f7fb;border:1px solid #d8dee8;border-radius:16px;padding:18px;margin:16px 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{background:white;padding:18px;border-radius:14px;border:1px solid var(--line)}.stat strong{display:block;font-size:1.6rem;margin-top:6px}
+.hidden{display:none!important}.muted{color:#64748b;font-size:.95rem}.booking{background:white;border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.signature-canvas{border:1px solid #cbd1da;border-radius:10px;background:white;width:100%;height:180px;touch-action:none}
+.signature-controls{display:flex;gap:10px;margin-top:10px}
+footer{text-align:center;padding:32px 16px 100px;color:#687385;margin-top:40px}
+@media(max-width:560px){main{padding:16px}.row2{grid-template-columns:1fr}.top{align-items:flex-start}.top .actions{margin:0}}
 </style>
 </head>
 <body>
@@ -52,42 +74,49 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
   <h2>Catálogo Completo</h2><div class="grid" id="productGrid"></div>
 </main>
 <div class="cartbar hidden" id="cartBar"><div class="cartinner">
-  <div><strong id="cartCount">0 item(ns) selecionado(s)</strong><div style="font-size:.9rem;color:#555">Total: <strong id="cartTotal" style="color:var(--red)">R$ 0,00</strong></div></div>
+  <div><strong id="cartCount">0 item(ns) selecionado(s)</strong><div style="font-size:1rem;color:#555;margin-top:4px">Total: <strong id="cartTotal" style="color:var(--red)">R$ 0,00</strong></div></div>
   <button class="primary" onclick="openDialog('checkoutDialog')">Finalizar Agendamento 🛒</button>
 </div></div>
 <footer><p>Fale conosco: <strong id="footerPhoneDisplay">(11) 99231-2902</strong> | © 2026 Família JMRK Brinquedos</p></footer>
 
-<dialog id="checkoutDialog"><div class="modalhead"><h3>Finalizar Agendamento</h3><button class="outline" onclick="closeDialog('checkoutDialog')">✖</button></div>
+<dialog id="checkoutDialog"><div class="modalhead"><h3>Finalizar Agendamento e Contrato de Locação</h3><button class="outline" onclick="closeDialog('checkoutDialog')">✖</button></div>
 <div class="modalbody">
-  <h4>Seus Itens Selecionados:</h4><div id="checkoutCartList"></div><hr style="margin:15px 0;border:0;border-top:1px solid #eee">
+  <h4>Seus Itens Selecionados:</h4><div id="checkoutCartList"></div><hr style="margin:20px 0;border:0;border-top:1px solid #eee">
   <form id="bookingForm" onsubmit="submitBooking(event)">
     <label>Seu Nome Completo:</label><input type="text" id="clientName" required maxlength="120" placeholder="Ex: Maria Silva">
     <div class="row2"><div><label>Telefone / WhatsApp:</label><input type="tel" id="clientPhone" required maxlength="30" placeholder="(11) 99231-2902"></div>
     <div><label>Data do Evento:</label><input type="date" id="eventDate" required></div></div>
     <label>Endereço de Entrega (Rua, Número, Bairro):</label><input type="text" id="clientAddress" required maxlength="250" placeholder="Ex: Rua das Flores, 123 - Itapevi">
     <label>Taxa de Entrega / Distância:</label><select id="shippingRate" onchange="updateCheckoutTotal()" required><option value="30">Até 10 km - R$ 30,00</option><option value="50">De 11 a 20 km - R$ 50,00</option></select>
-    <div style="margin:15px 0;font-size:1.05rem;background:#f9f9f9;padding:12px;border-radius:8px">
+    <div style="margin:20px 0;font-size:1.1rem;background:#f9f9f9;padding:16px;border-radius:10px">
       <div>Subtotal Brinquedos: <strong id="summarySubtotal">R$ 0,00</strong></div><div>Frete: <strong id="summaryShipping">R$ 30,00</strong></div>
-      <div style="font-size:1.2rem;color:var(--red);margin-top:5px">Total Geral: <strong id="summaryGrandTotal">R$ 0,00</strong></div>
+      <div style="font-size:1.3rem;color:var(--red);margin-top:8px">Total Geral: <strong id="summaryGrandTotal">R$ 0,00</strong></div>
     </div>
-    <div class="adminbox"><strong>Confirmação do pedido</strong><p class="muted">Declaro que revisei os itens, a data, o endereço e os valores informados. Este pedido é uma solicitação de agendamento e depende da confirmação da empresa.</p>
-      <label style="display:flex;gap:9px;align-items:flex-start;font-weight:600"><input type="checkbox" id="contractAccepted" required style="width:auto;margin-top:4px"> Li e concordo com a confirmação acima.</label>
+    <div class="adminbox">
+      <strong>Contrato de Locação de Brinquedos</strong>
+      <p class="muted" style="margin:12px 0;line-height:1.5">Ao assinar este termo, o locatário declara: 1) ser responsável por danos, avarias ou perda dos brinquedos durante o período de locação; 2) utilizar os equipamentos de forma adequada conforme orientação da Família JMRK Brinquedos; 3) concordar com os valores, data e endereço de entrega informados; 4) este pedido depende de confirmação pela locadora.</p>
+      <label>Assine abaixo para formalizar o contrato (desenhe na tela):</label>
+      <canvas id="signatureCanvas" class="signature-canvas"></canvas>
+      <div class="signature-controls">
+        <button type="button" class="outline" onclick="limparAssinatura()">Limpar Assinatura</button>
+      </div>
+      <label style="display:flex;gap:10px;align-items:flex-start;font-weight:600;margin-top:16px"><input type="checkbox" id="contractAccepted" required style="width:auto;margin-top:6px"> Li e concordo com todas as cláusulas do contrato de locação acima</label>
     </div>
-    <button type="submit" class="primary" id="submitBookingButton" style="width:100%;font-size:1.05rem">Enviar Agendamento via WhatsApp 📱</button>
+    <button type="submit" class="primary" id="submitBookingButton" style="width:100%;font-size:1.1rem;margin-top:12px">Enviar Agendamento com Contrato via WhatsApp 📱</button>
   </form>
 </div></dialog>
 
 <dialog id="clientDialog"><div class="modalhead"><h3>Consultar Agendamentos</h3><button class="outline" onclick="closeDialog('clientDialog')">✖</button></div>
 <div class="modalbody"><p>Neste aparelho, é possível consultar pedidos salvos.</p>
   <label>Digite seu telefone:</label><input type="tel" id="searchPhone" placeholder="(11) 99231-2902">
-  <button class="dark" style="margin-top:9px" onclick="searchClientBookings()">Buscar</button><div id="clientBookingsResult" style="margin-top:15px"></div>
+  <button class="dark" style="margin-top:12px" onclick="searchClientBookings()">Buscar</button><div id="clientBookingsResult" style="margin-top:20px"></div>
 </div></dialog>
 
 <dialog id="adminDialog"><div class="modalhead"><h3>🔒 Painel Administrativo</h3><button class="outline" onclick="closeDialog('adminDialog')">✖</button></div>
 <div class="modalbody">
   <p id="adminIdentity" class="muted"></p>
   <div class="stats"><div class="stat"><span>Agendamentos</span><strong id="statBookingsCount">0</strong></div><div class="stat"><span>Faturamento Total</span><strong id="statRevenue" style="color:var(--green)">R$ 0,00</strong></div></div>
-  <div class="adminbox"><h4>📱 WhatsApp da Empresa</h4><label>Número (DDD + número):</label><input type="text" id="adminPhoneInput" maxlength="15"><button class="primary" style="margin-top:8px" onclick="saveAdminPhone()">Salvar telefone</button></div>
+  <div class="adminbox"><h4>📱 WhatsApp da Empresa</h4><label>Número (DDD + número):</label><input type="text" id="adminPhoneInput" maxlength="15"><button class="primary" style="margin-top:10px" onclick="saveAdminPhone()">Salvar telefone</button></div>
   <div class="adminbox"><h4>Estoque</h4><div id="adminStockList"></div></div>
   <div class="adminbox"><h4>Lista de Agendamentos</h4><button class="dark" onclick="loadAdminData()">Atualizar</button><div id="adminBookingsList"></div></div>
   <button class="outline" onclick="adminLogout()">Sair</button>
@@ -125,90 +154,30 @@ const ADMIN_UID="ygY5ZDbEHagoxaFC0yPlu9gFPYJ3";
 const money=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 
 const initialProducts=[
-{id:1,name:"Cama Elástica 2,00 Metros",category:"camas",price:120,duration:"8 Horas",stock:5,img:"https://via.placeholder.com/400x260?text=Cama+2%2C00m"},
-{id:2,name:"Cama Elástica 2,44 Metros",category:"camas",price:140,duration:"8 Horas",stock:5,img:"https://via.placeholder.com/400x260?text=Cama+2%2C44m"},
-{id:3,name:"Cama Elástica 3,05 Metros",category:"camas",price:160,duration:"8 Horas",stock:4,img:"https://via.placeholder.com/400x260?text=Cama+3%2C05m"},
-{id:4,name:"Piscina de Bolinhas 1x1 Metro",category:"piscinas",price:120,duration:"8 Horas",stock:4,img:"https://via.placeholder.com/400x260?text=Piscina+1x1m"},
-{id:5,name:"Piscina de Bolinhas 1,5x1,5 Metros",category:"piscinas",price:140,duration:"8 Horas",stock:4,img:"https://via.placeholder.com/400x260?text=Piscina+1%2C5m"},
-{id:6,name:"Piscina de Bolinhas 2x2 Metros",category:"piscinas",price:160,duration:"8 Horas",stock:3,img:"https://via.placeholder.com/400x260?text=Piscina+2x2m"},
-{id:7,name:"Minhoga",category:"individuais",price:20,duration:"8 Horas",stock:6,img:"https://via.placeholder.com/400x260?text=Minhoga"},
-{id:8,name:"Cavalinho",category:"individuais",price:20,duration:"8 Horas",stock:6,img:"https://via.placeholder.com/400x260?text=Cavalinho"},
-{id:9,name:"Gangorra Infantil",category:"individuais",price:30,duration:"8 Horas",stock:5,img:"https://via.placeholder.com/400x260?text=Gangorra"},
-{id:10,name:"Escorregador Pequeno",category:"individuais",price:30,duration:"8 Horas",stock:5,img:"https://via.placeholder.com/400x260?text=Escorregador+P"},
-{id:11,name:"Escorregador Médio",category:"individuais",price:40,duration:"8 Horas",stock:4,img:"https://via.placeholder.com/400x260?text=Escorregador+M"},
-{id:12,name:"Escorregador Grande",category:"individuais",price:60,duration:"8 Horas",stock:3,img:"https://via.placeholder.com/400x260?text=Escorregador+G"},
-{id:13,name:"Jogo de Mesa com 4 Cadeiras",category:"individuais",price:20,duration:"8 Horas",stock:10,img:"https://via.placeholder.com/400x260?text=Jogo+de+Mesa"},
-{id:14,name:"Máquina de Algodão Doce",category:"individuais",price:100,duration:"Por Hora",stock:3,img:"https://via.placeholder.com/400x260?text=Algodao+Doce"},
-{id:15,name:"Pipoqueira Elétrica",category:"individuais",price:100,duration:"Por Hora",stock:3,img:"https://via.placeholder.com/400x260?text=Pipoqueira"},
-{id:16,name:"Pebolim Infantil",category:"individuais",price:150,duration:"8 Horas",stock:4,img:"https://via.placeholder.com/400x260?text=Pebolim"},
-{id:17,name:"Combo 1 (Cama 2,00m + Piscina 1x1m)",category:"combos",price:200,duration:"8 Horas + Brinde",stock:5,img:"https://via.placeholder.com/400x260?text=Combo+1"},
-{id:18,name:"Combo 2 (Cama 2,44m + Piscina 1,5x1,5m)",category:"combos",price:230,duration:"8 Horas + Brinde",stock:5,img:"https://via.placeholder.com/400x260?text=Combo+2"},
-{id:19,name:"Combo 3 (Cama 3,05m + Piscina 1,5x1,5m)",category:"combos",price:250,duration:"8 Horas + Brinde",stock:4,img:"https://via.placeholder.com/400x260?text=Combo+3"},
-{id:20,name:"Combo 4 (Cama 3,05m + Piscina 2x2m)",category:"combos",price:280,duration:"8 Horas + Brinde",stock:3,img:"https://via.placeholder.com/400x260?text=Combo+4"}
+{id:1,name:"Cama Elástica 2,00 Metros",category:"camas",price:120,duration:"8 Horas",stock:5,img:"cama‑2m.png"},
+{id:2,name:"Cama Elástica 2,44 Metros",category:"camas",price:140,duration:"8 Horas",stock:5,img:"cama‑244m.png"},
+{id:3,name:"Cama Elástica 3,05 Metros",category:"camas",price:160,duration:"8 Horas",stock:4,img:"cama‑305m.png"},
+{id:4,name:"Piscina de Bolinhas 1x1 Metro",category:"piscinas",price:120,duration:"8 Horas",stock:4,img:"piscina‑1x1.png"},
+{id:5,name:"Piscina de Bolinhas 1,5x1,5 Metros",category:"piscinas",price:140,duration:"8 Horas",stock:4,img:"piscina‑15x15.png"},
+{id:6,name:"Piscina de Bolinhas 2x2 Metros",category:"piscinas",price:160,duration:"8 Horas",stock:3,img:"piscina‑2x2.png"},
+{id:7,name:"Minhoga",category:"individuais",price:20,duration:"8 Horas",stock:6,img:"minhoga.png"},
+{id:8,name:"Cavalinho",category:"individuais",price:20,duration:"8 Horas",stock:6,img:"cavalinho.png"},
+{id:9,name:"Gangorra Infantil",category:"individuais",price:30,duration:"8 Horas",stock:5,img:"gangorra.png"},
+{id:10,name:"Escorregador Pequeno",category:"individuais",price:30,duration:"8 Horas",stock:5,img:"escorregador‑pequeno.png"},
+{id:11,name:"Escorregador Médio",category:"individuais",price:40,duration:"8 Horas",stock:4,img:"escorregador‑medio.png"},
+{id:12,name:"Escorregador Grande",category:"individuais",price:60,duration:"8 Horas",stock:3,img:"escorregador‑grande.png"},
+{id:13,name:"Jogo de Mesa com 4 Cadeiras",category:"individuais",price:20,duration:"8 Horas",stock:10,img:"mesa‑cadeiras.png"},
+{id:14,name:"Máquina de Algodão Doce",category:"individuais",price:100,duration:"Por Hora",stock:3,img:"algodao‑doce.png"},
+{id:15,name:"Pipoqueira Elétrica",category:"individuais",price:100,duration:"Por Hora",stock:3,img:"pipoqueira.png"},
+{id:16,name:"Pebolim Infantil",category:"individuais",price:150,duration:"8 Horas",stock:4,img:"pebolim.png"},
+{id:17,name:"Combo 1 (Cama 2,00m + Piscina 1x1m)",category:"combos",price:200,duration:"8 Horas + Brinde",stock:5,img:"combo1.png"},
+{id:18,name:"Combo 2 (Cama 2,44m + Piscina 1,5x1,5m)",category:"combos",price:230,duration:"8 Horas + Brinde",stock:5,img:"combo2.png"},
+{id:19,name:"Combo 3 (Cama 3,05m + Piscina 1,5x1,5m)",category:"combos",price:250,duration:"8 Horas + Brinde",stock:4,img:"combo3.png"},
+{id:20,name:"Combo 4 (Cama 3,05m + Piscina 2x2m)",category:"combos",price:280,duration:"8 Horas + Brinde",stock:3,img:"combo4.png"}
 ];
 
 let products=[...initialProducts];
 let cart=[];
 let currentAdmin=null;
 let currentFilter='todos';
-let companyPhone=localStorage.getItem('jmrk_phone')||"5511992312902";
-
-function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-
-function renderProducts(filter=currentFilter){
- currentFilter=filter;
- const grid=document.getElementById('productGrid');
- if(!grid) return;
- grid.innerHTML='';
- const list=filter==='todos'?products:products.filter(p=>p.category===filter);
- list.forEach(p=>{
-  const out=p.stock<=0;
-  const card=document.createElement('article');
-  card.className='card';
-  card.innerHTML=`<div class="product-art"><img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy"></div><div class="card-body"><span class="category">${escapeHtml(p.category)}</span><h3>${escapeHtml(p.name)}</h3><div class="price">${money(p.price)}</div><div class="duration">⏱️ ${escapeHtml(p.duration)}</div><div class="stockline ${out?'stockwarn':''}">${out?'❌ Indisponível':`Disponíveis: ${p.stock} un.`}</div><button class="primary" ${out?'disabled':''} onclick="addToCart(${p.id})">${out?'Esgotado':'Adicionar ao Carrinho 🛒'}</button></div>`;
-  grid.appendChild(card);
- });
- document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick')?.includes(`'${filter}'`)));
-}
-
-function filterCategory(cat,button){renderProducts(cat);}
-function addToCart(id){const p=products.find(x=>x.id===id);if(!p||p.stock<=0)return;const found=cart.find(x=>x.id===id);if(found){if(found.qty>=p.stock){alert('Quantidade máxima atingida.');return;}found.qty++;}else cart.push({...p,qty:1});updateCartBar();}
-function updateCartBar(){const count=cart.reduce((a,x)=>a+x.qty,0),subtotal=cart.reduce((a,x)=>a+x.price*x.qty,0);document.getElementById('cartBar').classList.toggle('hidden',count===0);document.getElementById('cartCount').textContent=`${count} item(ns) selecionado(s)`;document.getElementById('cartTotal').textContent=money(subtotal);}
-function openDialog(id){if(id==='checkoutDialog')renderCheckoutList();document.getElementById(id).showModal();}
-function closeDialog(id){document.getElementById(id).close();}
-function renderCheckoutList(){const list=document.getElementById('checkoutCartList');list.innerHTML='';cart.forEach(i=>{const row=document.createElement('div');row.className='cartitem';row.innerHTML=`<div class="cartitem-main"><strong>${escapeHtml(i.name)}</strong><div class="muted">${money(i.price)} x ${i.qty} = ${money(i.price*i.qty)}</div></div><div class="cartitem-actions"><button type="button" class="outline" onclick="changeQty(${i.id},-1)">−</button><span>${i.qty}</span><button type="button" class="outline" onclick="changeQty(${i.id},1)">+</button></div>`;list.appendChild(row);});updateCheckoutTotal();}
-function changeQty(id,delta){const item=cart.find(x=>x.id===id),p=products.find(x=>x.id===id);if(!item)return;item.qty+=delta;if(item.qty>p.stock)item.qty=p.stock;if(item.qty<=0)cart=cart.filter(x=>x.id!==id);updateCartBar();renderCheckoutList();if(!cart.length)closeDialog('checkoutDialog');}
-function updateCheckoutTotal(){const ship=Number(document.getElementById('shippingRate').value||30),sub=cart.reduce((a,x)=>a+x.price*x.qty,0);document.getElementById('summarySubtotal').textContent=money(sub);document.getElementById('summaryShipping').textContent=money(ship);document.getElementById('summaryGrandTotal').textContent=money(sub+ship);}
-
-async function submitBooking(e){
- e.preventDefault();if(!cart.length){alert('Adicione pelo menos um brinquedo.');return;}
- const btn=document.getElementById('submitBookingButton');btn.disabled=true;btn.textContent='Salvando pedido...';
- try{
-  const name=document.getElementById('clientName').value.trim(),phone=document.getElementById('clientPhone').value.trim(),date=document.getElementById('eventDate').value,address=document.getElementById('clientAddress').value.trim(),shipping=Number(document.getElementById('shippingRate').value),subtotal=cart.reduce((a,x)=>a+x.price*x.qty,0),total=subtotal+shipping;
-  if(!document.getElementById('contractAccepted').checked)throw new Error('Confirme a declaração.');
-  
-  const fb=window.jmrkFirebase;
-  let record=null;
-  if(fb && fb.db){
-    const ref=fb.doc(fb.collection(fb.db,'bookings'));
-    const bookingId=ref.id;
-    const contractText='Declaro que revisei os itens, a data, o endereço e os valores informados.';
-    record={id:bookingId,createdAt:new Date().toISOString(),name,phone,date,address,items:cart.map(i=>({id:i.id,name:i.name,qty:i.qty,price:i.price})),status:'pendente',totalText:money(total),contractSigned:true,contractText,subtotal,shipping,total};
-    await fb.setDoc(ref,record);
-    for(const ci of cart){
-     const p=products.find(x=>x.id===ci.id);
-     if(p){
-      p.stock=Math.max(0,p.stock-ci.qty);
-      try{ await fb.updateDoc(fb.doc(fb.db,'products',String(p.id)),{stock:p.stock}); }catch(err){}
-     }
-    }
-  }
-  renderProducts();updateCartBar();
-  const lines=cart.map(i=>`• ${i.name} - ${i.qty} un. (${money(i.price*i.qty)})`).join('\n');
-  const msg=`*NOVO PEDIDO - FAMÍLIA JMRK BRINQUEDOS*\n\nCliente: ${name}\nTelefone: ${phone}\nData: ${date}\nEndereço: ${address}\n\n${lines}\n\nSubtotal: ${money(subtotal)}\nEntrega: ${money(shipping)}\n*Total: ${money(total)}*`;
-  const wa=`https://wa.me/${companyPhone}?text=${encodeURIComponent(msg)}`;
-  document.getElementById('bookingForm').reset();cart=[];updateCartBar();closeDialog('checkoutDialog');
-  alert('Pedido salvo com sucesso! Abrindo o WhatsApp...');
-  window.open(wa,'_blank','noopener');
- }catch(err){console.error(err);alert('Erro ao salvar: '+(err.message||err));}
- finally{btn.disabled=false;btn.textContent='Enviar 
+let companyPhone=localStorage.getItem('jmrk_phone')||"5511992312

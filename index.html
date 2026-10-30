@@ -49,7 +49,7 @@ footer{text-align:center;padding:25px 16px 95px;color:#687385}
     <button onclick="filterCategory('individuais',this)">Itens Individuais</button>
     <button onclick="filterCategory('combos',this)">Combos Promocionais</button>
   </div>
-  <h2>Catálogo Completo</h2><div class="grid" id="productGrid">Carregando catálogo...</div>
+  <h2>Catálogo Completo</h2><div class="grid" id="productGrid"></div>
 </main>
 <div class="cartbar hidden" id="cartBar"><div class="cartinner">
   <div><strong id="cartCount">0 item(ns) selecionado(s)</strong><div style="font-size:.9rem;color:#555">Total: <strong id="cartTotal" style="color:var(--red)">R$ 0,00</strong></div></div>
@@ -141,7 +141,7 @@ const initialProducts=[
 {id:20,name:"Combo 4 (Cama 3,05m + Piscina 2x2m)",category:"combos",price:280,duration:"8 Horas + Brinde",stock:3,img:"https://via.placeholder.com/400x260?text=Combo+4"}
 ];
 let products=[...initialProducts];
-let bookings=JSON.parse(localStorage.getItem('jmrk_bookings_v2')||'[]');
+let bookings=[];
 let cart=[];
 let currentAdmin=null;
 let currentFilter='todos';
@@ -156,11 +156,12 @@ function waitFirebase(){
 }
 
 async function initCatalog(){
- renderProducts(); // Desenha a lista imediatamente na tela!
+ renderProducts(); // Desenha na tela imediatamente
  try{
   const {db,collection,getDocs,doc,setDoc}=await waitFirebase();
   const snap=await getDocs(collection(db,'products'));
   if(snap.empty){
+   console.log("Recriando produtos no Firestore...");
    for(const item of initialProducts){
     await setDoc(doc(db,'products',String(item.id)),item);
    }
@@ -169,7 +170,7 @@ async function initCatalog(){
    renderProducts();
   }
  }catch(e){
-  console.log("Mantendo catálogo local devido ao Firestore:",e);
+  console.log("Usando catálogo padrão:",e);
  }
 }
 
@@ -186,7 +187,7 @@ function renderProducts(filter=currentFilter){
   card.innerHTML=`<div class="product-art"><img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy"></div><div class="card-body"><span class="category">${escapeHtml(p.category)}</span><h3>${escapeHtml(p.name)}</h3><div class="price">${money(p.price)}</div><div class="duration">⏱️ ${escapeHtml(p.duration)}</div><div class="stockline ${out?'stockwarn':''}">${out?'❌ Indisponível':`Disponíveis: ${p.stock} un.`}</div><button class="primary" ${out?'disabled':''} onclick="addToCart(${p.id})">${out?'Esgotado':'Adicionar ao Carrinho 🛒'}</button></div>`;
   grid.appendChild(card);
  });
- document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick').includes(`'${filter}'`)));
+ document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick')?.includes(`'${filter}'`)));
 }
 
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -198,7 +199,6 @@ function closeDialog(id){document.getElementById(id).close();}
 function renderCheckoutList(){const list=document.getElementById('checkoutCartList');list.innerHTML='';cart.forEach(i=>{const row=document.createElement('div');row.className='cartitem';row.innerHTML=`<div class="cartitem-main"><strong>${escapeHtml(i.name)}</strong><div class="muted">${money(i.price)} x ${i.qty} = ${money(i.price*i.qty)}</div></div><div class="cartitem-actions"><button type="button" class="outline" onclick="changeQty(${i.id},-1)">−</button><span>${i.qty}</span><button type="button" class="outline" onclick="changeQty(${i.id},1)">+</button></div>`;list.appendChild(row);});updateCheckoutTotal();}
 function changeQty(id,delta){const item=cart.find(x=>x.id===id),p=products.find(x=>x.id===id);if(!item)return;item.qty+=delta;if(item.qty>p.stock)item.qty=p.stock;if(item.qty<=0)cart=cart.filter(x=>x.id!==id);updateCartBar();renderCheckoutList();if(!cart.length)closeDialog('checkoutDialog');}
 function updateCheckoutTotal(){const ship=Number(document.getElementById('shippingRate').value||30),sub=cart.reduce((a,x)=>a+x.price*x.qty,0);document.getElementById('summarySubtotal').textContent=money(sub);document.getElementById('summaryShipping').textContent=money(ship);document.getElementById('summaryGrandTotal').textContent=money(sub+ship);}
-function saveLocal(){localStorage.setItem('jmrk_products_v2',JSON.stringify(products));localStorage.setItem('jmrk_bookings_v2',JSON.stringify(bookings));}
 
 async function submitBooking(e){
  e.preventDefault();if(!cart.length){alert('Adicione pelo menos um brinquedo ao carrinho.');return;}
@@ -209,4 +209,4 @@ async function submitBooking(e){
   const {db,collection,doc,setDoc,updateDoc}=await waitFirebase();
   const ref=doc(collection(db,'bookings'));const bookingId=ref.id;
   const contractText='Declaro que revisei os itens, a data, o endereço e os valores informados. Este pedido é uma solicitação de agendamento e depende da confirmação da empresa.';
-  const record={id:bookingId,createdAt:new Date().toISOString(),name
+  const record={id:bookingId,createdAt:new Date().toISOString(),name,phone,date,address,items:cart.map(i=>({id:i.id,name:i.name,qty:i.qty,price:i.price})),status:'pendente',totalText:money(total),contractSigned:true,contractText,contractSignedAt:new Date().toISOString(),subto
